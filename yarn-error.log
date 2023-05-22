@@ -1,0 +1,41 @@
+Arguments: 
+  /home/cai/.nvm/versions/node/v16.15.1/bin/node /home/cai/.nvm/versions/node/v16.15.1/bin/yarn install
+
+PATH: 
+  ./bin:./node_modules/.bin:/home/cai/.nvm/versions/node/v16.15.1/bin:/home/cai/.rbenv/shims:/home/cai/.rbenv/bin:/home/cai/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/citya/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/citya/.dotnet/tools:/mnt/c/Users/citya/AppData/Local/Programs/Microsoft VS Code/bin:/usr/local/rvm/bin:/usr/local/sbin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.15.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26)
+
+npm manifest: 
+  {
+    "name": "app",
+    "private": "true",
+    "dependencies": {
+      "@hotwired/stimulus": "^3.2.1",
+      "@hotwired/turbo-rails": "^7.3.0",
+      "@popperjs/core": "^2.11.7",
+      "bootstrap": "^5.2.3",
+      "webpack": "^5.83.1",
+      "webpack-cli": "^5.1.1"
+    },
+    "scripts": {
+      "build": "webpack --config webpack.config.js"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
