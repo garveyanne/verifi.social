@@ -1,0 +1,2 @@
+class ImageResultsController < ApplicationController
+end
