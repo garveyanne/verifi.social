@@ -1,3 +1,8 @@
 <div class="contianer">
   <h1>Post</h1>
+  <% if policy(@post).edit? %>
+    <%= link_to "Edit", edit_post_path(@post) %> |
+  <% end %>
+  <!-- [...] -->
+  <%= button_to "Delete", @post, method: :delete if policy(@post).destroy? %>
 </div>
