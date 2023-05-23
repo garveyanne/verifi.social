@@ -1,0 +1,29 @@
+
+.post_card {
+
+}
+.post_card_body{
+
+}
+.navbar-lewagon {
+  justify-content: space-between;
+  background: #FBE4E7;
+}
+
+.navbar-lewagon .navbar-collapse {
+  flex-grow: 0;
+}
+
+.navbar-lewagon .navbar-brand img {
+  width: 40px;
+}
+
+.nav-item {
+  margin-left: 10px
+}
+
+@media(max-width: 567px)  {
+  .nav-item {
+    margin-left: 0
+  }
+}
