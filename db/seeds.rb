@@ -1,7 +1,7 @@
-Post.destroy_all
-puts "cleared post data"
 Comment.destroy_all
 puts "cleared comment data"
+Post.destroy_all
+puts "cleared post data"
 User.destroy_all
 puts "cleared user data"
 
