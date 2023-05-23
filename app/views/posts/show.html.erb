@@ -1,3 +1,19 @@
 <div class="contianer">
-  <h1>Post</h1>
+  <h1><%= @post.title %></h1>
+  <%= @post.user.user_name %>
+  <%= @post.content %>
+  <%= @post.photo %>
+  <div>
+    <h1>Add a comment</h1>
+    <%= simple_form_for [@post, @comment] do |f| %>
+      <%= f.input :content %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+  <div class="cards">
+    <% @comments.each do |comment| %>
+      <%= comment.user.user_name %>
+      <%= comment.content %>
+    <% end %>
+  </div>
 </div>
