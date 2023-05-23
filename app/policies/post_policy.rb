@@ -1,6 +1,5 @@
 class PostPolicy < ApplicationPolicy
 
-
   def show?
     true
   end
@@ -10,7 +9,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-   true
+    true
   end
 
   def update?
