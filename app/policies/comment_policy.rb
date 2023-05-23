@@ -1,5 +1,4 @@
-class PostPolicy < ApplicationPolicy
-
+class CommentPolicy < ApplicationPolicy
 
   def show?
     true
@@ -10,7 +9,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-   true
+    true
   end
 
   def update?
@@ -24,16 +23,10 @@ class PostPolicy < ApplicationPolicy
   def destroy?
     record.user == user
   end
-
-  def create?
-    true
-  end
-
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
-     def resolve
-       user.admin? ? scope.all : scope.where(user: user)
-     end
-
+    #def resolve
+    # scope.all
+    # end
   end
 end

@@ -1,8 +1,12 @@
 <div class="contianer">
   <h1><%= @post.title %></h1>
+  <% if policy(@post).edit? %>
+    <%= link_to "Edit", edit_post_path(@post) %> |
+  <% end %>
+  <%= button_to "Delete", @post, method: :delete if policy(@post).destroy? %>
   <%= @post.user.user_name %>
   <%= @post.content %>
-  <%= @post.photo %>
+  <%= cl_image_tag @post.photo.key, height: 300, width: 400, crop: :fill %>
   <div>
     <h1>Add a comment</h1>
     <%= simple_form_for [@post, @comment] do |f| %>
