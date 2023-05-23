@@ -1,3 +1,7 @@
 <div class="container">
-  <h1>New Results</h1>
+  <h1>New Image upload</h1>
+  <%= simple_form_for @image_results do |f| %>
+    <%= f.input :photo, as: :file %>
+    <%= f.submit %>
+  <% end %>
 </div>

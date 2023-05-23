@@ -1,7 +1,6 @@
 <div class="container">
   <%= link_to "New Post", new_post_path if policy(Post).new? %>
   <h1>Posts</h1>
-
   <% @posts.each do |post| %>
     <div class="cards">
       <%= post.title %>
