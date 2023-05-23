@@ -2,8 +2,9 @@
   <h1>Results</h1>
   <% @results.each do |result| %>
     <div class="cards">
-      <%# here is where the image will go but cloudinary isnt working atm %>
-      <%# when user clicks the image, they jump to the show page %>
+      <%= link_to image_results_path(result) do %>
+        <%= cl_image_tag result.photo.key, height: 300, width: 400, crop: :fill %>
+      <% end %>
     </div>
   <% end %>
 </div>

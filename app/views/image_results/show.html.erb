@@ -1,5 +1,5 @@
 <div class="container">
   <h1>Details</h1>
-  <%# here is where the image will go but cloudinary isnt working atm %>
+  <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
   <%# here is all the details of the picture %>
 </div>
