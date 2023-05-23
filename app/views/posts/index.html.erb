@@ -1,3 +1,11 @@
 <div class="container">
   <h1>Posts</h1>
+  <% @posts.each do |post| %>
+    <div class="cards">
+      <%= post.title %>
+      <%= post.user.user_name %>
+      <%= post.content %>
+      <%= post.photo %>
+    </div>
+  <% end %>
 </div>
