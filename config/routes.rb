@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+
   get '/tagged', to: "posts#tagged", as: :tagged
+
 end
