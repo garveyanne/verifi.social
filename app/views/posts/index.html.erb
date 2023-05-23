@@ -1,3 +1,4 @@
+
 <div class="container w-75">
   <div class="d-flex justify-content-between w-75">
     <h1>What's the issue?</h1>
@@ -12,6 +13,10 @@
     <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
   </div>
   <h2>Catergories</h2>
+<div class="container">
+  <%= link_to "New Post", new_post_path if policy(Post).new? %>
+  <h1>Posts</h1>
+
   <% @posts.each do |post| %>
     <div class="mt-2 mb-2 grid gap-3 ">
       <div class="p-1 g-col-6">
