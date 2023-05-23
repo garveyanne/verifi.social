@@ -5,12 +5,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-
   resources :image_results, only: [:index, :show, :new, :create, :destroy]
   resources :posts do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
-
 
   get '/tagged', to: "posts#tagged", as: :tagged
 
