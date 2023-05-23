@@ -2,6 +2,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    authorize @posts
   end
 
   def show
@@ -11,11 +12,13 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    authorize @post
   end
 
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+    authorize @post
     if @post.save
       redirect_to post_path(:id)
     else
@@ -27,11 +30,13 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    authorize @post
   end
 
   def update
     @post = Post.find(params[:id])
-    if @post.save
+    authorize @post
+    if @post.update(post_params)
       redirect_to post_path(:id)
     else
       render :edit, status: :uprocessable_entity
@@ -40,6 +45,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+    authorize @post
     if @post.destroy
       redirect_to posts_path
     end
