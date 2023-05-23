@@ -1,35 +1,35 @@
-# class ImageResultsPolicy < ApplicationPolicy
-#   def index?
-#     false
-#   end
+class ImageResultsPolicy < ApplicationPolicy
+  def index?
+    record.user == user
+  end
 
-#   def show?
-#     record.user == user
-#   end
+  def show?
+    record.user == user
+  end
 
-#   def new?
-#     create?
-#   end
+  def new?
+    create?
+  end
 
-#   def create?
-#     record.user == user
-#   end
+  def create?
+    record.user == user
+  end
 
-#   def update?
-#     record.user == user
-#   end
+  def update?
+    record.user == user
+  end
 
-#   def edit?
-#     update?
-#   end
+  def edit?
+    update?
+  end
 
-#   def destroy?
-#     record.user == user
-#   end
-#   class Scope < Scope
-#     # NOTE: Be explicit about which records you allow access to!
-#     # def resolve
-#     #   scope.all
-#     # end
-#   end
-# end
+  def destroy?
+    record.user == user
+  end
+  class Scope < Scope
+    # NOTE: Be explicit about which records you allow access to!
+    def resolve
+      user.admin? ? scope.all : scope.where(user: user)
+    end
+  end
+end
