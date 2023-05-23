@@ -6,5 +6,5 @@ class User < ApplicationRecord
 
   # has_one_attatched :photo *****
 
-  validates :age, numericality: { greater_than_or_equal_to: 18 }
+  # validates :age, numericality: { greater_than_or_equal_to: 18 }
 end
