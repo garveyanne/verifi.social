@@ -1,16 +1,19 @@
-<div class="container">
-<<<<<<< HEAD
-  <h1>All Posts</h1>
-=======
+<div class="container w-75">
   <%= link_to "New Post", new_post_path if policy(Post).new? %>
-  <h1>Posts</h1>
->>>>>>> master
-  <% @posts.each do |post| %>
-    <div class="cards">
-      <%= post.title %>
-      <%= post.user.user_name %>
-      <%= post.content %>
-      <%= post.photo %>
+  <h1>What's the issue?</h1>
+  <div class="input-group mb-3 w-75">
+    <div class="input-group-prepend ">
+      <span class="input-group-text" id="inputGroup-sizing-default"><i class="fa-thin fa-magnifying-glass"></i></span>
     </div>
-  <% end %>
+    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+  </div>
 </div>
+<% @posts.each do |post| %>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"> <%= post.user.user_name %></h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary"> <%= post.content %><%= post.title %></h6>
+      <p class="card-text">  <%= cl_image_tag(post.photo.key) %></p>
+    </div>
+  </div>
+<% end %>
