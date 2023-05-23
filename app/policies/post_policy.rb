@@ -1,5 +1,6 @@
 class PostPolicy < ApplicationPolicy
 
+
   def show?
     true
   end
@@ -22,6 +23,10 @@ class PostPolicy < ApplicationPolicy
 
   def destroy?
     record.user == user
+  end
+
+  def create?
+    true
   end
 
   class Scope < Scope
