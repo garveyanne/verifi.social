@@ -1,10 +1,7 @@
 <div class="container">
-<<<<<<< HEAD
-  <h1>All Posts</h1>
-=======
   <%= link_to "New Post", new_post_path if policy(Post).new? %>
   <h1>Posts</h1>
->>>>>>> master
+
   <% @posts.each do |post| %>
     <div class="cards">
       <%= post.title %>
