@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     authorize @post
-    if @post.save
+    if @post.update(post_params)
       redirect_to post_path(:id)
     else
       render :edit, status: :uprocessable_entity
