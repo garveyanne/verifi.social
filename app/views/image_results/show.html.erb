@@ -1,4 +1,7 @@
 <div class="container">
+  <%= link_to image_results_path, class: "back-button" do %>
+    <i class="fa-solid fa-arrow-left"></i> Back to My Results
+  <% end %>
   <h1>Details</h1>
   <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
   <div class="row">

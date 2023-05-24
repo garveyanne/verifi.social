@@ -8,7 +8,9 @@
         <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= @post.user.user_name %></h1>
         <h2><%= @post.title %></h2>
         <p class="font-weight-light"><%= @post.content %></p>
-        <%= cl_image_tag @post.photo.key, class: "w-100 post-img" %>
+        <% if @post.photo.attached? %>
+          <%= cl_image_tag @post.photo.key, class: "w-100 post-img" %>
+        <% end %>
         <br>
       </div>
       <%= simple_form_for [@post, @comment] do |f| %>
