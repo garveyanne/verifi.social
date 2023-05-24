@@ -1,3 +1,7 @@
 <div class="container">
-  <h1>New Results</h1>
+  <h1>Upload photo</h1>
 </div>
+<%= form_with(url: "/image_results/new", local: true) do |form| %>
+  <%= form.file_field :image %>
+  <%= form.submit "Upload" %>
+<% end %>
