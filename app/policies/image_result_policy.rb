@@ -1,4 +1,5 @@
-class ImageResultsPolicy < ApplicationPolicy
+class ImageResultPolicy < ApplicationPolicy
+
   def index?
     record.user == user
   end
@@ -12,15 +13,15 @@ class ImageResultsPolicy < ApplicationPolicy
   end
 
   def create?
-    record.user == user
-  end
-
-  def update?
-    record.user == user
+    true
   end
 
   def edit?
     update?
+  end
+
+  def update?
+    record.user == user
   end
 
   def destroy?

@@ -9,6 +9,7 @@ class PostsController < ApplicationController
     if params[:tag_list].present?
       @posts = @posts.tagged_with(params[:tag_list])
     end
+    @tags = ActsAsTaggableOn::Tag.most_used(10)
   end
 
   def show

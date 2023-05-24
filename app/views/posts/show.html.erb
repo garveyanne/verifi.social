@@ -1,23 +1,25 @@
-<div class="container">
-  <h1><%= @post.title %></h1>
-  <% if policy(@post).edit? %>
-    <%= link_to "Edit", edit_post_path(@post) %> |
+<div class="container w-75">
+  <%= link_to posts_path, class: "back-button" do %>
+    <i class="fa-solid fa-arrow-left"></i> Back to Community
   <% end %>
-  <%= button_to "Delete", @post, method: :delete if policy(@post).destroy? %>
-  <%= @post.user.user_name %>
-  <%= @post.content %>
-  <%= cl_image_tag @post.photo.key, height: 300, width: 400, crop: :fill %>
-  <div>
-    <h1>Add a comment</h1>
-    <%= simple_form_for [@post, @comment] do |f| %>
-      <%= f.input :content %>
-      <%= f.submit %>
-    <% end %>
+  <div class="post-card">
+    <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= @post.user.user_name %></h1>
+    <h2><%= @post.title %></h2>
+    <p><%= @post.content %></p>
+    <%= cl_image_tag @post.photo.key, height: 300, width: 400, crop: :fill %>
   </div>
-  <div class="cards">
-    <% @comments.each do |comment| %>
-      <%= comment.user.user_name %>
-      <%= comment.content %>
-    <% end %>
-  </div>
+  <%= simple_form_for [@post, @comment] do |f| %>
+    <%= f.input :content %>
+    <%= f.submit %>
+  <% end %>
+  <% @comments.each do |comment| %>
+    <div class="post-card">
+      <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= comment.user.user_name %></h1>
+      <p><%= comment.content %></p>
+    </div>
+  <% end %>
+  <% if policy(@post).edit? %>
+    <%= link_to "Edit", edit_post_path(@post), class: "button" %>
+    <%= button_to "Delete", @post, method: :delete if policy(@post).destroy? %>
+  <% end %>
 </div>
