@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_path(@post)
     else
-      render :new, status: :uprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to post_path(@post)
     else
-      render :edit, status: :uprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
