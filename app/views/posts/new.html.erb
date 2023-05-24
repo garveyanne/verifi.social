@@ -1,10 +1,16 @@
-<div class="container">
-  <h1>Create a Post</h1>
-  <%= simple_form_for @post do |f| %>
-    <%= f.input :title%>
-    <%= f.input :content %>
-    <%= f.input :photo, as: :file %>
-    <%= f.input :tag_list, label: "Enter tags" %>
-    <%= f.submit %>
-  <% end %>
+<div class="container" style="max-width: 800px">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <%= link_to posts_path, class: "back-button" do %>
+        <i class="fa-solid fa-arrow-left"></i> Back to Community
+      <% end %>
+      <%= simple_form_for @post do |f| %>
+        <%= f.input :title, label: false, input_html: {class: "bg-white " , placeholder: "Title" }%>
+        <%= f.input :content, label: false, input_html: { class: "bg-white ", placeholder: "body text (optional)", rows: "5"} %>
+        <%= f.input :photo, as: :file, label: false, input_html: { class: "bg-white", placeholder: "No photo chosen" } %>
+        <%= f.input :tag_list, label: "Enter category", input_html: { class: "bg-white", placeholder: "nudity, BDSM, violence, gore"} %>
+        <%= f.submit class: "button" %>
+      <% end %>
+    </div>
+  </div>
 </div>
