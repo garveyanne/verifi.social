@@ -1,9 +1,21 @@
-<h2>Secure your account. Verifi your content</h2>
-<p>Check if your content passes social media guidelines, no more warnings, no more deleted accounts.</p>
-<%= image_tag("product.png", width: "80%", height: "100%", alt: "product image") %>
-<%= link_to "Verifi", "/results/new", class: "" %>
-<h2>Reclaim Your Voice. Share Stories of Content Deletion.</h2>
-<p>Your content got deleted? Join us to connect with others who have faced similar challenges, find support,
-  and contribute to discussions on content deletion on social media.</p>
-<%= image_tag("group.png", width: "40%", height: "80%", alt: "group image") %>
-<%= link_to "Verifi Community", "/posts", class: "" %>
+<div class="container">
+  <div class="row justify-content-center text-center">
+    <h2 class="mt-3 title-text-height">Secure
+      your account. <br>
+      Verifi your
+      content</h2>
+    <p class="mt-2">Check if your content passes social media guidelines, no more warnings, no more deleted accounts.</p>
+    <%= link_to "Verifi", "/results/new", class: "button" %>
+    <%= image_tag("product.png", width: "80%", height: "100%", alt: "product image") %>
+    <h2 class = "title-text-height">Reclaim Your Voice.<br>
+      Share Stories of <br>
+      Content Deletion.</h2>
+    <p class="mt-2">Your content got deleted? Join us to connect with others who have faced similar challenges, and find support,
+      and contribute to discussion.</p>
+    <%= link_to "Verifi Community", "/posts", class: "button mb-3" %>
+    <div style="height:40%;">
+      <%= image_tag("group.png", alt: "group image") %>
+    </div>
+  </div>
+</div>
+<%# # %>
