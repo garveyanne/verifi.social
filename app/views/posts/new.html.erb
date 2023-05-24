@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Create a Post</h1>
   <%= simple_form_for @post do |f| %>
-    <%= f.input :title%>
+    <%= f.input :title, input_html: {class: "bg-white", placeholder: "What are your thoughts?", rows: "5"}%>
     <%= f.input :content %>
     <%= f.input :photo, as: :file %>
     <%= f.input :tag_list, label: "Enter tags" %>
