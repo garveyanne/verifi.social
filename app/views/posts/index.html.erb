@@ -1,11 +1,5 @@
-
 <div class="container w-75">
-  <div class="d-flex justify-content-between w-75">
-    <h1>What's the issue?</h1>
-    <%= link_to new_post_path, class: "button-post" do %>
-      <i class="fa-solid fa-plus"></i>
-    <%end%>
-  </div>
+  <h1>What's the issue?</h1>
   <div class="input-group mb-3 w-75">
     <div class="input-group-prepend ">
       <span class="input-group-text" id="inputGroup-sizing-default"><i class="fa-thin fa-magnifying-glass"></i></span>
@@ -13,35 +7,26 @@
     <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
   </div>
   <h2>Catergories</h2>
-<div class="container">
-  <%= link_to "New Post", new_post_path if policy(Post).new? %>
-  <h1>Posts</h1>
-
-  <% @posts.each do |post| %>
-    <div class="mt-2 mb-2 grid gap-3 ">
-      <div class="p-1 g-col-6">
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-      </div>
-      <div class="p-1 g-col-6">
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-      </div>
-      <div class="p-1 g-col-6">
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-        <%= link_to 'Category', posts_path, class: "button-category" %>
-      </div>
-    </div>
-  <% end %>
-  <% @posts.each do |post| %>
-    <%= link_to post_path(post) do %>
-      <div class="post-card w-75 border border-0 mb-3">
-        <div class="post-card-body border-bottom mb-1">
-          <p style="text-decoration: none;"><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= post.user.user_name %></p>
-          <p class="card-subtitle mb-2 text-body-secondary" style="text-decoration: none;"><%= post.title %></p>
-          <p class="card-text" style="text-decoration: none;"> <%= post.content %> <%#= cl_image_tag(post.photo.key) %></p>
+  <div>
+    <% @posts.each do |post| %>
+      <div class="mt-2 mb-2 grid gap-3 ">
+        <div class="p-1 g-col-6">
+          <%= link_to 'Category', posts_path, class: "button-category" %>
+          <%= link_to 'Category', posts_path, class: "button-category" %>
         </div>
       </div>
     <% end %>
+  </div>
+  <% @posts.each do |post| %>
+    <%= link_to post_path(post), class: "text-link" do %>
+      <div class="post-card w-75">
+        <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= post.user.user_name %></h1>
+        <h2><%= post.title %></h2>
+        <p> <%= post.content %> <%#= cl_image_tag(post.photo.key) %></p>
+      </div>
+    <% end %>
   <% end %>
+  <%= link_to new_post_path, class: "button-post", id: "sticky-button" do %>
+    <i class="fa-solid fa-plus"></i>
+  <%end%>
 </div>
