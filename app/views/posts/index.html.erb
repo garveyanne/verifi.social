@@ -1,9 +1,6 @@
 <div class="container w-75">
-  <div class="d-flex justify-content-between w-75">
+  <div class="w-75">
     <h1>What's the issue?</h1>
-    <%= link_to new_post_path, class: "button-post" do %>
-      <i class="fa-solid fa-plus"></i>
-    <%end%>
   </div>
   <div class="input-group mb-3 w-75">
     <div class="input-group-prepend ">
@@ -12,7 +9,7 @@
     <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
   </div>
   <h2>Catergories</h2>
-  <div class="container">
+  <div>
     <% @posts.each do |post| %>
       <div class="mt-2 mb-2 grid gap-3 ">
         <div class="p-1 g-col-6">
@@ -24,11 +21,14 @@
   </div>
   <% @posts.each do |post| %>
     <%= link_to post_path(post), class: "text-link" do %>
-      <div class="post-card">
+      <div class="post-card w-75">
         <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= post.user.user_name %></h1>
         <h2><%= post.title %></h2>
         <p> <%= post.content %> <%#= cl_image_tag(post.photo.key) %></p>
       </div>
     <% end %>
   <% end %>
+  <%= link_to new_post_path, class: "button-post", id: "sticky-button" do %>
+    <i class="fa-solid fa-plus"></i>
+  <%end%>
 </div>

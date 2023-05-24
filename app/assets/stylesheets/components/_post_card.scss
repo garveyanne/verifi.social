@@ -13,8 +13,7 @@ padding: 2px;
 .post-car p{
   font-size: 16px;
 }
-@media(max-width: 679px)  {
-  .post-card h1{
-    margin-left: 0
-  }
+.post-card:hover {
+  color: black;
 }
+
