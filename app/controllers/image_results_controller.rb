@@ -6,12 +6,12 @@ class ImageResultsController < ApplicationController
 
   def show
   @result = ImageResult.find(params[:id])
-  authorize @image_results
+  authorize @image_result
   end
 
   def new
     @result = ImageResult.new
-    authorize @image_results
+    authorize @result
   end
 
   def create
