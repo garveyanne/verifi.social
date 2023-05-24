@@ -10,7 +10,7 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Verifi", "/results/new", class: "dropdown-item" %>
+            <%= link_to "Verifi", "/image_results/new", class: "dropdown-item" %>
           </li>
           <li class="nav-item">
             <%= link_to "Community", "/posts", class: "dropdown-item" %>
@@ -23,7 +23,7 @@
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Verifi", "/results/new", class: "dropdown-item" %>
+            <%= link_to "Verifi", "/image_results/new", class: "dropdown-item" %>
           </li>
           <li class="nav-item">
             <%= link_to "Community", "/posts", class: "dropdown-item" %>
