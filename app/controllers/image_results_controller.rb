@@ -5,7 +5,7 @@ class ImageResultsController < ApplicationController
   end
 
   def show
-  @result = Image_results.find(params[:id])
+  @result = Image_result.find(params[:id])
   authorize @image_results
   end
 
