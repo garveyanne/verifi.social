@@ -12,11 +12,13 @@
     <% end %>
   </div>
   <h2 class="mb-3">Catergories</h2>
-  <div class="row ">
+  <div class="row gap-2 justify-content-center">
     <% @tags.each do |tag| %>
-      <%= link_to posts_path(tag_list: tag.name, query: params[:query]), class: "button-category d-flex justify-content-around col-5 m-1" do %>
-        <p class="m-0 align-self-center"> <%= tag.name.capitalize %> </p>
-      <% end %>
+      <div class="col-6 m-0 p-0 button-grid">
+        <%= link_to posts_path(tag_list: tag.name, query: params[:query]), class: "button-category d-flex justify-content-around m-0" do %>
+          <p class="m-0 align-self-center"> <%= tag.name.capitalize %> </p>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div class="mt-4">
