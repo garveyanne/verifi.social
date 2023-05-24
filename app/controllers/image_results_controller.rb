@@ -31,8 +31,8 @@ class ImageResultsController < ApplicationController
     params = {
       'url' => result.photo.url,
       'models' => 'nudity-2.0,wad,offensive,gore',
-      'api_user' => '1608682898',
-      'api_secret' => 'PmEbv8uuWJUwtGinJATZ'
+      'api_user' => ENV['API_USER'],
+      'api_secret' => ENV['API_SECRET']
     }
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get_response(uri)
