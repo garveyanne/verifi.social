@@ -3,6 +3,13 @@ class PostsController < ApplicationController
 
   def index
     @posts = policy_scope(Post)
+    if params[:query].present?
+      @posts = @posts.search_by_title_and_content(params[:query])
+    end
+    if params[:tag_list].present?
+      @posts = @posts.tagged_with(params[:tag_list])
+    end
+    @tags = ActsAsTaggableOn::Tag.most_used(10)
   end
 
   def show
@@ -22,9 +29,9 @@ class PostsController < ApplicationController
     @post.user = current_user
     authorize @post
     if @post.save
-      redirect_to post_path(:id)
+      redirect_to posts_path
     else
-      render :new, status: :uprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +48,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_path(:id)
     else
-      render :edit, status: :uprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

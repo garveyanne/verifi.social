@@ -6,7 +6,6 @@ User.destroy_all
 puts "cleared user data"
 
 
-
 users = [
   { user_name: "user1", email: "user1@mail.com", password: "secret", age: 20 },
   { user_name: "user2", email: "user2@mail.com", password: "secret", age: 22 },
