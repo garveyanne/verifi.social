@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_23_044216) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_24_035325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_23_044216) do
     t.integer "nudity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "sexual_activity"
+    t.float "sexual_display"
+    t.float "erotica"
+    t.float "suggestive"
+    t.float "drugs"
+    t.float "nazi"
+    t.float "confederate"
+    t.float "supremacist"
+    t.float "terrorist"
+    t.float "gore"
     t.index ["user_id"], name: "index_image_results_on_user_id"
   end
 

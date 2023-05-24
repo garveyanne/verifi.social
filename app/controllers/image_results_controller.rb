@@ -15,11 +15,11 @@ class ImageResultsController < ApplicationController
   end
 
   def create
-    @result = ImageResult.new
+    @result = ImageResult.new(result_params)
     @result.user = current_user
-    verifi(@result) if @result.photo.attached?
     authorize @image_results
     if @result.save
+      verifi(@result) if @result.photo.attached?
       redirect_to image_results_path(@result)
     else
       render :new, status: :uprocessable_entity
@@ -29,7 +29,7 @@ class ImageResultsController < ApplicationController
   def verifi(result)
     uri = URI('https://api.sightengine.com/1.0/check.json')
     params = {
-      'url' => 'https://wallpapercave.com/wp/aYLVhao.jpg',
+      'url' => Cloudinary::Utils.cloudinary_url(result.photo.key),
       'models' => 'nudity-2.0,wad,offensive,gore',
       'api_user' => '1608682898',
       'api_secret' => 'PmEbv8uuWJUwtGinJATZ'
@@ -38,12 +38,9 @@ class ImageResultsController < ApplicationController
     response = Net::HTTP.get_response(uri)
 
     output = JSON.parse(response.body)
+    result.sexual_activity = output["nudity"]["sexual_activity"]
+
   end
-
-  # Cloudinary::Utils.cloudinary_url(result.photo.key)
-
-  # nudity.sexual_activity,nudity.sexual_display,nudity.erotica
-
 
   #### not needed for friday demo
 
@@ -51,5 +48,11 @@ class ImageResultsController < ApplicationController
     @result = ImageResults.find(params[:id])
     @result.destroy
     redirect_to image_results_path
+  end
+
+  private
+
+  def result_params
+    params.require(:image_result).permit(:photo)
   end
 end
