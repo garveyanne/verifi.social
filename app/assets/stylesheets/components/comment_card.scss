@@ -1,0 +1,18 @@
+.comment-card {
+padding: 16px;
+vertical-align: baseline;
+margin: 2px;
+}
+.comment-card h1{
+  font-size: 14px;
+  padding: 2px;
+  }
+  .comment-card h2{
+    font-size: 20px;
+  }
+  .comment-card p{
+    font-size: 16px;
+  }
+  .comment-card:hover {
+    color: black;
+  }
