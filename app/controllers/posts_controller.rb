@@ -35,8 +35,6 @@ class PostsController < ApplicationController
     end
   end
 
-  ### below is not needed for Friday demo, so should be low priority for now
-
   def edit
     @post = Post.find(params[:id])
     authorize @post
@@ -46,7 +44,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize @post
     if @post.update(post_params)
-      redirect_to post_path(:id)
+      redirect_to post_path(params[:id])
     else
       render :edit, status: :unprocessable_entity
     end

@@ -23,8 +23,8 @@
   <%= link_to new_post_path, class: "button-post", id: "sticky-button" do %>
     <i class="fa-solid fa-plus"></i>
   <%end%>
+  <% if policy(@post).edit? %>
+    <%= link_to "Edit", edit_post_path(@post), class: "button" %>
+    <%= link_to "Delete", @post, data: { turbo_method: :delete, turbo_confirm: "Delete post?" }, class: "button" %>
+  <% end %>
 </div>
-<% if policy(@post).edit? %>
-  <%= link_to "Edit", edit_post_path(@post), class: "button" %>
-  <%= button_to "Delete", @post, method: :delete if policy(@post).destroy? %>
-<% end %>
