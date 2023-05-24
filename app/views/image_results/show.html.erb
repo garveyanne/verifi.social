@@ -1,6 +1,12 @@
 <div class="container">
   <h1>Details</h1>
   <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
+  <div class="row">
+    <%= link_to "Ask Verifi Community", posts_path, class: "button" %>
+  </div>
+  <div class="row">
+    <%= link_to "Tips for Content Guidelines", tips_path, class: "button" %>
+  </div>
   <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
   <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
   <p>Erotic: <%= @result.erotica  * 100%>%</p>
