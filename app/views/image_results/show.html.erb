@@ -1,5 +1,14 @@
 <div class="container">
   <h1>Details</h1>
   <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
-  <%# here is all the details of the picture %>
+  <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
+  <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
+  <p>Erotic: <%= @result.erotica  * 100%>%</p>
+  <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
+  <p>Drugs: <%= @result.drugs  * 100%>%</p>
+  <p>Nazi: <%= @result.nazi * 100%>%</p>
+  <p>Confederate: <%= @result.confederate  * 100%>%</p>
+  <p>Supremacist: <%= @result.supremacist  * 100%>%</p>
+  <p>Terrorist: <%= @result.terrorist  * 100%>%</p>
+  <p>Gore: <%= @result.gore * 100%>%</p>
 </div>
