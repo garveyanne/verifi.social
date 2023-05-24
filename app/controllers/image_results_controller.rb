@@ -20,7 +20,7 @@ class ImageResultsController < ApplicationController
     authorize @result
     if @result.save
       verifi(@result) if @result.photo.attached?
-      redirect_to image_results_path(@result)
+      redirect_to image_result_path(@result)
     else
       render :new, status: :uprocessable_entity
     end
