@@ -17,7 +17,7 @@ class ImageResultsController < ApplicationController
   def create
     @result = ImageResult.new(result_params)
     @result.user = current_user
-    authorize @image_results
+    authorize @result
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_results_path(@result)
