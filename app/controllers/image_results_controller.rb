@@ -1,4 +1,6 @@
 class ImageResultsController < ApplicationController
+  before_action :verify_authenticity_token, only: [:create]
+
   def index
     @results = policy_scope(ImageResult)
   end
