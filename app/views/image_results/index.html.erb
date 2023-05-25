@@ -4,6 +4,7 @@
       <h1>My Results</h1>
       <% @results.each do |result| %>
         <div class="post-card m-3">
+          <h3><%= result.created_at.strftime("%m-%d-%Y") %></h3>
           <%= link_to image_result_path(result) do %>
             <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
             <%= link_to "Delete", image_result_path(result), data: { turbo_method: :delete, turbo_confirm: "Delete post?" }, class: "button mt-2" %>
