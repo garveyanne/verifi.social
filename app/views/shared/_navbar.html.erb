@@ -24,6 +24,15 @@
           <li class="nav-item">
             <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
           </li>
+          <div class="nav-item dropdown">
+            <i class="fa-solid fa-bell dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" ></i>
+            <%= current_user.notifications.where(unread: true).count %>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <% current_user.notifications.where(unread: true).each do |notification| %>
+                <li><%= link_to "New comment", post_path(notification.post), class:"dropdown-item" %></li>
+              <% end %>
+            </ul>
+          </div>
         <% else %>
           <li class="nav-item">
             <%= link_to "Verifi", "/image_results/new", class: "dropdown-item" %>
