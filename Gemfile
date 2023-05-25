@@ -59,7 +59,6 @@ gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "cloudinary"
-gem "dotenv-rails"
 
 ## custom adds
 gem 'acts-as-taggable-on'
