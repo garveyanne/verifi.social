@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
     @comment.post = @post
     authorize @comment
     if @comment.save
+      Notification.create(post: @post, user: @post.user)
       redirect_to post_path(@post)
     else
       render :new, status: :unprocessable_entity
