@@ -6,7 +6,8 @@ class User < ApplicationRecord
 
 
   # has_one_attatched :photo *****
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
+  has_many :image_results, dependent: :destroy
 
   validates :age, numericality: { only_integer: true, greater_than_or_equal_to: 18 }
   validates :user_name, presence: true, uniqueness: true
