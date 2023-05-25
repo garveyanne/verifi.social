@@ -1,6 +1,6 @@
 <div class="container" style="max-width: 800px">
   <div class="row justify-content-center">
-    <div class="col-12">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <%= link_to posts_path, class: "back-button" do %>
         <i class="fa-solid fa-arrow-left"></i> Back to Community
       <% end %>
@@ -21,7 +21,7 @@
       <% end %>
       <% @comments.each do |comment| %>
         <div class="comment-card">
-          <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= comment.user.user_name %></h1>
+          <h1><img class="avatar" alt="avatar" src="https://cdn1.iconfinder.com/data/icons/user-interface-colorful/48/user-1024.png" /> <%= comment.user.user_name %></h1>
           <p class="font-weight-light"><%= comment.content %></p>
         </div>
       <% end %>

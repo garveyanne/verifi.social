@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_023927) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_25_035246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_023927) do
     t.index ["user_id"], name: "index_image_results_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "title"
+    t.boolean "unread"
+    t.datetime "sent_at"
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_notifications_on_post_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -133,6 +145,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_023927) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "image_results", "users"
+  add_foreign_key "notifications", "posts"
+  add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "taggings", "tags"
 end

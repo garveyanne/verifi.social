@@ -1,26 +1,27 @@
 <div class="container">
-  <%= link_to image_results_path, class: "back-button" do %>
-    <i class="fa-solid fa-arrow-left"></i> Back to My Results
-  <% end %>
-  <h1>Details</h1>
-  <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
-  <div class="row">
-    <%= link_to "Ask Verifi Community", posts_path, class: "button" %>
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-8">
+      <%= link_to image_results_path, class: "back-button" do %>
+        <i class="fa-solid fa-arrow-left"></i> Back to My Results
+      <% end %>
+      <h2>Details</h2>
+      <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
+      <div class="mt-3">
+        <%= link_to "Ask Verifi Community", posts_path, class: "button" %>
+        <%= link_to "Tips/Content Guidelines", tips_path, class: "button" %>
+      </div>
+      <h2>Results</h2>
+      <div class="post-card mb-3">
+        <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
+        <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
+        <p>Erotic: <%= @result.erotica  * 100%>%</p>
+        <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
+        <p>Drugs: <%= @result.drugs  * 100%>%</p>
+        <p>Gore: <%= @result.gore * 100%>%</p>
+        <p>Profanity Type: <%= @result.profanity_type %> </p>
+        <p>Profanity Found: <%= @result.profanity_match %> </p>
+        <p>Profanity Intensity: <%= @result.profanity_intensity %> </p>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <%= link_to "Tips for Content Guidelines", tips_path, class: "button" %>
-  </div>
-  <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
-  <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
-  <p>Erotic: <%= @result.erotica  * 100%>%</p>
-  <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
-  <p>Drugs: <%= @result.drugs  * 100%>%</p>
-  <p>Nazi: <%= @result.nazi * 100%>%</p>
-  <p>Confederate: <%= @result.confederate  * 100%>%</p>
-  <p>Supremacist: <%= @result.supremacist  * 100%>%</p>
-  <p>Terrorist: <%= @result.terrorist  * 100%>%</p>
-  <p>Gore: <%= @result.gore * 100%>%</p>
-  <p>Profanity Type: <%= @result.profanity_type %> </p>
-  <p>Profanity Found: <%= @result.profanity_match %> </p>
-  <p>Profanity Intensity: <%= @result.profanity_intensity %> </p>
 </div>
