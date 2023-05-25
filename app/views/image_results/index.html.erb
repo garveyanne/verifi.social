@@ -1,16 +1,23 @@
 <div class="container">
   <div class="row justify-content-center mt-3">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-      <h1>My Results</h1>
-      <% @results.each do |result| %>
-        <div class="post-card m-3">
-          <h3><%= result.created_at.strftime("%m-%d-%Y") %></h3>
-          <%= link_to image_result_path(result) do %>
-            <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
-            <%= link_to "Delete", image_result_path(result), data: { turbo_method: :delete, turbo_confirm: "Delete post?" }, class: "button mt-2" %>
-          <% end %>
-        </div>
-      <% end %>
+      <h3 class="mb-3">My Results</h3>
+      <div class="card-grid">
+        <% @results.each do |result| %>
+          <div class="post-card">
+            <%= link_to image_result_path(result) do %>
+              <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
+            <% end %>
+            <div class="p-2">
+              <p class="mt-1 mb-0"> Created on <br>
+                <%= result.created_at.strftime("%m-%d-%Y") %></p>
+            </div>
+            <%= link_to image_result_path(result), data: { turbo_method: :delete, turbo_confirm: "Delete post?" } do %>
+              <i class="fa-solid fa-xmark xmark"></i>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
