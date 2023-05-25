@@ -17,6 +17,7 @@ class PostsController < ApplicationController
     @comments = @post.comments
     @comment = Comment.new
     authorize @post
+    @post.notifications.where(user: current_user).update_all(unread: false)
   end
 
   def new
