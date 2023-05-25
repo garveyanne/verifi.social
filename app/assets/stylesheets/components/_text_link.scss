@@ -1,4 +1,7 @@
 .text-link {
   text-decoration: none;
-  color : #000000
+  color : #000000;
+  &:hover {
+    color: rgba(0, 0, 0, .7)
+  }
 }

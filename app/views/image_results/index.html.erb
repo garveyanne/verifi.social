@@ -1,10 +1,14 @@
 <div class="container">
-  <h1>My Results</h1>
-  <% @results.each do |result| %>
-    <div class="card">
-      <%= link_to image_result_path(result) do %>
-        <%= cl_image_tag result.photo.key, height: 300, width: 400, crop: :fill %>
+  <div class="row justify-content-center mt-3">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-8">
+      <h1>My Results</h1>
+      <% @results.each do |result| %>
+        <div class="post-card m-3">
+          <%= link_to image_result_path(result) do %>
+            <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
+          <% end %>
+        </div>
       <% end %>
     </div>
-  <% end %>
+  </div>
 </div>

@@ -47,9 +47,9 @@ class ImageResultsController < ApplicationController
     result.supremacist = output["offensive"]["supremacist"]
     result.terrorist = output["offensive"]["terrorist"]
     result.gore = output["gore"]["prob"]
-    result.profanity_type = output["text"]["profanity"][0]["type"]
-    result.profanity_match = output["text"]["profanity"][0]["match"]
-    result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
+    # result.profanity_type = output["text"]["profanity"][0]["type"]
+    # result.profanity_match = output["text"]["profanity"][0]["match"]
+    # result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
     result.save
   end
 
