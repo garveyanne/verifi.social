@@ -12,15 +12,17 @@
       </div>
       <h2>Results</h2>
       <div class="post-card mb-3">
-        <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
-        <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
-        <p>Erotic: <%= @result.erotica  * 100%>%</p>
-        <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
-        <p>Drugs: <%= @result.drugs  * 100%>%</p>
-        <p>Gore: <%= @result.gore * 100%>%</p>
-        <p>Profanity Type: <%= @result.profanity_type %> </p>
-        <p>Profanity Found: <%= @result.profanity_match %> </p>
-        <p>Profanity Intensity: <%= @result.profanity_intensity %> </p>
+        <div class="Graphs">
+          <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
+          <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
+          <p>Erotic: <%= @result.erotica  * 100%>%</p>
+          <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
+          <p>Drugs: <%= @result.drugs  * 100%>%</p>
+          <p>Gore: <%= @result.gore * 100%>%</p>
+          <p>Profanity Type: <%= @result.profanity_type %> </p>
+          <p>Profanity Found: <%= @result.profanity_match %> </p>
+          <p>Profanity Intensity: <%= @result.profanity_intensity %> </p>
+        </div>
       </div>
     </div>
   </div>
