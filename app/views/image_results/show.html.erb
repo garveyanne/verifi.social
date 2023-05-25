@@ -1,4 +1,7 @@
 <div class="container">
+  <%= link_to image_results_path, class: "back-button" do %>
+    <i class="fa-solid fa-arrow-left"></i> Back to My Results
+  <% end %>
   <h1>Details</h1>
   <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
   <div class="row">
@@ -17,4 +20,7 @@
   <p>Supremacist: <%= @result.supremacist  * 100%>%</p>
   <p>Terrorist: <%= @result.terrorist  * 100%>%</p>
   <p>Gore: <%= @result.gore * 100%>%</p>
+  <p>Profanity Type: <%= @result.profanity_type %> </p>
+  <p>Profanity Found: <%= @result.profanity_match %> </p>
+  <p>Profanity Intensity: <%= @result.profanity_intensity %> </p>
 </div>

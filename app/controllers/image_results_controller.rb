@@ -30,7 +30,7 @@ class ImageResultsController < ApplicationController
     uri = URI('https://api.sightengine.com/1.0/check.json')
     params = {
       'url' => result.photo.url,
-      'models' => 'nudity-2.0,wad,offensive,gore',
+      'models' => 'nudity-2.0,wad,offensive,text-content,gore',
       'api_user' => ENV['API_USER'],
       'api_secret' => ENV['API_SECRET']
     }
@@ -47,10 +47,10 @@ class ImageResultsController < ApplicationController
     result.supremacist = output["offensive"]["supremacist"]
     result.terrorist = output["offensive"]["terrorist"]
     result.gore = output["gore"]["prob"]
-
+    result.profanity_type = output["text"]["profanity"][0]["type"]
+    result.profanity_match = output["text"]["profanity"][0]["match"]
+    result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
     result.save
-
-
   end
 
 
