@@ -1,14 +1,115 @@
 <div class="container">
   <h1>Details</h1>
-  <%= cl_image_tag @result.photo.key, height: 300, width: 400, crop: :fill %>
-  <p>Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
-  <p>Sexual Display: <%= @result.sexual_display * 100%>%</p>
-  <p>Erotic: <%= @result.erotica  * 100%>%</p>
-  <p>Suggestive: <%= @result.suggestive  * 100%>%</p>
-  <p>Drugs: <%= @result.drugs  * 100%>%</p>
-  <p>Nazi: <%= @result.nazi * 100%>%</p>
-  <p>Confederate: <%= @result.confederate  * 100%>%</p>
-  <p>Supremacist: <%= @result.supremacist  * 100%>%</p>
-  <p>Terrorist: <%= @result.terrorist  * 100%>%</p>
-  <p>Gore: <%= @result.gore * 100%>%</p>
+  <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+    <p id= "sexual-activity">Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
+    <p id= "sexual-display">Sexual Display: <%= @result.sexual_display * 100%>%</p>
+    <p id= "erotic">Erotic: <%= @result.erotica  * 100%>%</p>
+    <p id= "suggestive">Suggestive: <%= @result.suggestive  * 100%>%</p>
+    <p id= "drugs">Drugs: <%= @result.drugs  * 100%>%</p>
+    <p id= "gore">Gore: <%= @result.gore * 100%>%</p>
 </div>
+
+
+<% categories = {"Sexual Activity" => @result.sexual_activity * 100,
+    "Sexual Display" => @result.sexual_display * 100,
+    "erotic" => @result.erotica * 100,
+    "suggestive" => @result.suggestive * 100,
+    "drugs" => @result.drugs * 100,
+    "gore" => @result.gore * 100 } %>
+
+<% categories.sort_by(&:last) %>
+
+<div class="w-75">
+  <%= bar_chart(categories) %>
+</div>
+
+  <%# const categories = [
+    { label: "sexual activity", value: sexualActivityResult },
+    { label: "Sexual Display", value: sexualDisplayResult },
+    { label: "Erotic", value: eroticResult },
+    { label: "Suggestive", value: suggestiveResult },
+    { label: "Drugs", value: drugsResult },
+    { label: "Gore", value: goreResult }
+  ]; %>
+
+<%# <div class="w-75">
+  <canvas id="myChart" class="chart-canvas"></canvas>
+</div> %>
+<%#
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+  const sexualActivity = document.getElementById('sexual-activity');
+  const sexualActivityResult = parseInt(sexualActivity.innerText.split(': ')[1])
+  const sexualDisplay = document.getElementById('sexual-display');
+  const sexualDisplayResult = parseInt(sexualDisplay.innerText.split(': ')[1])
+  const erotic = document.getElementById('erotic');
+  const eroticResult = parseInt(erotic.innerText.split(': ')[1])
+  const suggestive = document.getElementById('suggestive');
+  const suggestiveResult = parseInt(suggestive.innerText.split(': ')[1])
+  const drugs = document.getElementById('drugs');
+  const drugsResult = parseInt(drugs.innerText.split(': ')[1])
+  const gore = document.getElementById('gore');
+  const goreResult = parseInt(gore.innerText.split(': ')[1])
+
+  const categories = [
+    { label: "sexual activity", value: sexualActivityResult },
+    { label: "Sexual Display", value: sexualDisplayResult },
+    { label: "Erotic", value: eroticResult },
+    { label: "Suggestive", value: suggestiveResult },
+    { label: "Drugs", value: drugsResult },
+    { label: "Gore", value: goreResult }
+  ];
+
+  // Sort the categories array in ascending order based on the value
+  categories.sort(function(a, b) {
+    return b.value - a.value;
+  });
+
+  const chartLabels = categories.map(function(item) {
+    return item.label;
+  });
+  const chartData = categories.map(function(item) {
+    return item.value;
+  });
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'percentage',
+        data: chartData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)'
+        ],
+
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script> %>
