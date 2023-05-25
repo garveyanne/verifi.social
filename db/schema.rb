@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_035246) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "title", default: "New Comment"
+    t.string "title"
     t.boolean "unread"
     t.datetime "sent_at"
     t.bigint "user_id", null: false
