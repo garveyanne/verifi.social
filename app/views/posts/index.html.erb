@@ -29,7 +29,7 @@
         <% @posts.each do |post| %>
           <div class="post-card mt-2 mb-2">
             <%= link_to post_path(post), class: "text-link" do %>
-              <h1><img class="avatar" alt="avatar" src="https://kitt.lewagon.com/placeholder/users/cveneziani" /> <%= post.user.user_name %></h1>
+              <h1><img class="avatar" alt="avatar" src="https://cdn1.iconfinder.com/data/icons/user-interface-colorful/48/user-1024.png" /> <%= post.user.user_name %></h1>
               <h2><%= post.title %></h2>
               <p> <%= post.content %> <%#= cl_image_tag(post.photo.key) %></p>
             <% end %>
