@@ -10,6 +10,8 @@ class PostsController < ApplicationController
       @posts = @posts.tagged_with(params[:tag_list])
     end
     @tags = ActsAsTaggableOn::Tag.most_used(10)
+    @tags_first = @tags.first(4)
+    @tags_extra = @tags.last(6)
   end
 
   def show
@@ -17,6 +19,7 @@ class PostsController < ApplicationController
     @comments = @post.comments
     @comment = Comment.new
     authorize @post
+    @post.notifications.where(user: current_user).update_all(unread: false)
   end
 
   def new
@@ -35,8 +38,6 @@ class PostsController < ApplicationController
     end
   end
 
-  ### below is not needed for Friday demo, so should be low priority for now
-
   def edit
     @post = Post.find(params[:id])
     authorize @post
@@ -46,7 +47,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize @post
     if @post.update(post_params)
-      redirect_to post_path(:id)
+      redirect_to post_path(params[:id])
     else
       render :edit, status: :unprocessable_entity
     end

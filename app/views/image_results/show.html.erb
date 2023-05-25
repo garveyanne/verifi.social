@@ -1,5 +1,10 @@
 <div class="container">
-  <h1>Details</h1>
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-8">
+      <%= link_to image_results_path, class: "back-button" do %>
+        <i class="fa-solid fa-arrow-left"></i> Back to My Results
+      <% end %>
+      <h1>Details</h1>
   <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
     <p id= "sexual-activity">Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
     <p id= "sexual-display">Sexual Display: <%= @result.sexual_display * 100%>%</p>
@@ -8,7 +13,7 @@
     <p id= "drugs">Drugs: <%= @result.drugs  * 100%>%</p>
     <p id= "gore">Gore: <%= @result.gore * 100%>%</p>
 </div>
-
+</div>
 
 <% categories = {"Sexual Activity" => @result.sexual_activity * 100,
     "Sexual Display" => @result.sexual_display * 100,

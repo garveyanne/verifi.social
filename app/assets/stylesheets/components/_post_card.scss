@@ -1,11 +1,11 @@
 
 .post-card {
- border: 1px solid rgba(210, 207, 207, 0.685);
-
+border: 1px solid rgba(210, 207, 207, 0.685);
 padding: 16px;
 vertical-align: baseline;
 margin: 2px;
 border-radius: 3px;
+max-width: 800px;
 }
 .post-card h1{
 font-size: 14px;
@@ -17,6 +17,7 @@ padding: 2px;
 .post-card p{
   font-size: 16px;
 }
-.post-card:hover {
-  color: black;
+
+.post-img {
+  object-fit: scale-down;
 }
