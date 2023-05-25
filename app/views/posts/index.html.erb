@@ -16,13 +16,27 @@
       <h2 class="mb-3">Catergories</h2>
       <div class = "category-container">
         <div class="row gap-2 justify-content-center">
-          <% @tags.each do |tag| %>
+          <% @tags_first.each do |tag| %>
             <div class="col-6 m-0 p-0 button-grid">
               <%= link_to posts_path(tag_list: tag.name, query: params[:query]), class: "button-category d-flex justify-content-around m-0" do %>
                 <p class="m-0 align-self-center"> <%= tag.name.capitalize %> </p>
               <% end %>
             </div>
           <% end %>
+        </div>
+        <a class="button-see-more" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          See more
+        </a>
+        <div class="collapse" id="collapseExample">
+          <div class="row gap-2 justify-content-center">
+            <% @tags_extra.each do |tag| %>
+              <div class="col-6 m-0 p-0 button-grid">
+                <%= link_to posts_path(tag_list: tag.name, query: params[:query]), class: "button-category d-flex justify-content-around m-0" do %>
+                  <p class="m-0 align-self-center"> <%= tag.name.capitalize %> </p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="mt-4">
