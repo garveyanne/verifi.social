@@ -4,7 +4,7 @@
       <h3 class="mb-3">My Results</h3>
       <div class="card-grid">
         <% @results.each do |result| %>
-          <div class="post-card">
+          <div class="post-card-result">
             <%= link_to image_result_path(result) do %>
               <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
             <% end %>
