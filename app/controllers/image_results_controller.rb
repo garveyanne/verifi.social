@@ -1,12 +1,11 @@
 class ImageResultsController < ApplicationController
-
   def index
     @results = policy_scope(ImageResult)
   end
 
   def show
-  @result = ImageResult.find(params[:id])
-  authorize @result
+    @result = ImageResult.find(params[:id])
+    authorize @result
   end
 
   def new
@@ -53,12 +52,12 @@ class ImageResultsController < ApplicationController
     result.save
   end
 
-
   #### not needed for friday demo
 
   def destroy
-    @result = ImageResults.find(params[:id])
+    @result = ImageResult.find(params[:id])
     @result.destroy
+    authorize @result
     redirect_to image_results_path
   end
 
