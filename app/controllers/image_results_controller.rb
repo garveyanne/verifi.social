@@ -38,6 +38,19 @@ class ImageResultsController < ApplicationController
       colors: colorarray
     }
 
+    @danger = []
+    @caution = []
+    @safe = []
+    @categories.each do |name, value|
+      if value.to_i > 40
+        @danger << name
+      elsif value.to_i > 20
+        @caution << name
+      else
+        @safe << name
+      end
+    end
+
     authorize @result
   end
 
