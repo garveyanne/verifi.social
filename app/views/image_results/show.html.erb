@@ -5,12 +5,11 @@
         <i class="fa-solid fa-arrow-left"></i> Back to My Results
       <% end %>
       <h1>Details</h1>
-
       <div class="row">
         <div>
           <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
           <% if @result.profanity_type %>
-            <h2>Text related risks</h2>
+            <h2>Text related risks: </h2>
             <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
           <% end %>
           <% if @result.profanity_type && @result.profanity_match %>
@@ -25,28 +24,28 @@
             <h2>No imagery related risks</h2>
           <% else %>
             <h2>Imagery related risks:</h2>
-            <% if @danger %>
-              <p><strong>Your image is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
+            <% if @danger.empty? && @caution.empty? %>
+              <p><strong>Low risk for removal</strong></p>
+            <% else %>
+              <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
+              <p>High: <%= @danger.join(", ") %></p>
+              <p>Caution: <%= @caution.join(", ")  %></p>
+              <p>Safe: <%= @safe.join(", ")  %></p>
             <% end %>
-            <p>High: <%= @danger.join(", ") %></p>
-            <p>Caution: <%= @caution.join(", ")  %></p>
-            <p>Safe: <%= @safe.join(", ")  %></p>
-            <div class="w-75">
+            <div class="w-75 mb-3">
               <%= bar_chart(@categories) %>
             </div>
-
           <% end %>
+          <%= link_to "Tips", tips_path, class:"button mb-3" %>
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-           <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
+            <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
           </a>
-
-            <% end %>
-
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <%# const categories = [
+</div>
+<%# const categories = [
     { label: "sexual activity", value: sexualActivityResult },
     { label: "Sexual Display", value: sexualDisplayResult },
     { label: "Erotic", value: eroticResult },
@@ -54,10 +53,10 @@
     { label: "Drugs", value: drugsResult },
     { label: "Gore", value: goreResult }
   ]; %>
-  <%# <div class="w-75">
+<%# <div class="w-75">
   <canvas id="myChart" class="chart-canvas"></canvas>
 </div> %>
-  <%#
+<%#
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
