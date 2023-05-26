@@ -57,9 +57,11 @@ class ImageResultsController < ApplicationController
     result.suggestive = output["nudity"]["suggestive"]
     result.drugs = output["drugs"]
     result.gore = output["gore"]["prob"]
-    result.profanity_type = output["text"]["profanity"][0]["type"]
-    result.profanity_match = output["text"]["profanity"][0]["match"]
-    result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
+    if output["text"]["profanity"][0]
+      result.profanity_type = output["text"]["profanity"][0]["type"]
+      result.profanity_match = output["text"]["profanity"][0]["match"]
+      result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
+    end
     result.save
   end
 
