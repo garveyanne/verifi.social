@@ -5,29 +5,31 @@
         <i class="fa-solid fa-arrow-left"></i> Back to My Results
       <% end %>
       <h1>Details</h1>
-  <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
-    <p id= "sexual-activity">Sexual Activity: <%= @result.sexual_activity * 100%>%</p>
-    <p id= "sexual-display">Sexual Display: <%= @result.sexual_display * 100%>%</p>
-    <p id= "erotic">Erotic: <%= @result.erotica  * 100%>%</p>
-    <p id= "suggestive">Suggestive: <%= @result.suggestive  * 100%>%</p>
-    <p id= "drugs">Drugs: <%= @result.drugs  * 100%>%</p>
-    <p id= "gore">Gore: <%= @result.gore * 100%>%</p>
-</div>
-</div>
-
-<% categories = {"Sexual Activity" => @result.sexual_activity * 100,
-    "Sexual Display" => @result.sexual_display * 100,
-    "erotic" => @result.erotica * 100,
-    "suggestive" => @result.suggestive * 100,
-    "drugs" => @result.drugs * 100,
-    "gore" => @result.gore * 100 } %>
-
-<% categories.sort_by(&:last) %>
-
-<div class="w-75">
-  <%= bar_chart(categories) %>
-</div>
-
+      <div class="row">
+        <div>
+          <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+          <% if @result.profanity_type %>
+            <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
+          <% end %>
+          <% if @result.profanity_type && @result.profanity_match %>
+            <p>Profanity Used: <%= @result.profanity_match.html_safe %></p>
+          <% end %>
+          <% if @result.profanity_type && @result.profanity_match && @result.profanity_intensity %>
+            <p>Profanity Intensity: <%= @result.profanity_intensity.html_safe %></p>
+          <% end %>
+        </div>
+        <div>
+          <% if @categories.values.all?(nil) %>
+            <h2>No imagery related risks</h2>
+          <% else %>
+            <div class="w-75">
+              <%= bar_chart(@categories) %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
   <%# const categories = [
     { label: "sexual activity", value: sexualActivityResult },
     { label: "Sexual Display", value: sexualDisplayResult },
@@ -36,11 +38,10 @@
     { label: "Drugs", value: drugsResult },
     { label: "Gore", value: goreResult }
   ]; %>
-
-<%# <div class="w-75">
+  <%# <div class="w-75">
   <canvas id="myChart" class="chart-canvas"></canvas>
 </div> %>
-<%#
+  <%#
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

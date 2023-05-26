@@ -1,10 +1,26 @@
 class ImageResultsController < ApplicationController
+  before_action :verify_authenticity_token, only: [:create]
+
   def index
     @results = policy_scope(ImageResult)
   end
 
   def show
     @result = ImageResult.find(params[:id])
+    @categories = {
+      "Sexual Activity" => nil,
+      "Sexual Display" => nil,
+      "Erotica" => nil,
+      "Suggestive" => nil,
+      "Drugs" => nil,
+      "Gore" => nil }
+    @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
+    @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
+    @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
+    @categories["Suggestive"] = (@result.suggestive * 100) if @result.suggestive >= 0.05
+    @categories["Drugs"] = (@result.drugs * 100) if @result.drugs >= 0.05
+    @categories["Gore"] = (@result.gore * 100) if @result.gore >= 0.05
+    @data = @categories.map { |category, value| [category, value] if value }.compact
     authorize @result
   end
 
@@ -41,18 +57,14 @@ class ImageResultsController < ApplicationController
     result.erotica = output["nudity"]["erotica"]
     result.suggestive = output["nudity"]["suggestive"]
     result.drugs = output["drugs"]
-    result.nazi = output["offensive"]["nazi"]
-    result.confederate = output["offensive"]["confederate"]
-    result.supremacist = output["offensive"]["supremacist"]
-    result.terrorist = output["offensive"]["terrorist"]
     result.gore = output["gore"]["prob"]
-    # result.profanity_type = output["text"]["profanity"][0]["type"]
-    # result.profanity_match = output["text"]["profanity"][0]["match"]
-    # result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
+    if output["text"]["profanity"][0]
+      result.profanity_type = output["text"]["profanity"][0]["type"]
+      result.profanity_match = output["text"]["profanity"][0]["match"]
+      result.profanity_intensity = output["text"]["profanity"][0]["intensity"]
+    end
     result.save
   end
-
-  #### not needed for friday demo
 
   def destroy
     @result = ImageResult.find(params[:id])
