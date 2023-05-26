@@ -19,9 +19,13 @@
           <% end %>
         </div>
         <div>
-          <div class="w-75">
-            <%= bar_chart(@categories) %>
-          </div>
+          <% if @categories.values.all?(nil) %>
+            <h2>No imagery related risks</h2>
+          <% else %>
+            <div class="w-75">
+              <%= bar_chart(@categories) %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

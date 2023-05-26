@@ -8,12 +8,12 @@ class ImageResultsController < ApplicationController
   def show
     @result = ImageResult.find(params[:id])
     @categories = {
-      "Sexual Activity" => 0,
-      "Sexual Display" => 0,
-      "Erotica" => 0,
-      "Suggestive" => 0,
-      "Drugs" => 0,
-      "Gore" => 0 }
+      "Sexual Activity" => nil,
+      "Sexual Display" => nil,
+      "Erotica" => nil,
+      "Suggestive" => nil,
+      "Drugs" => nil,
+      "Gore" => nil }
     @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
     @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
     @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
