@@ -13,14 +13,31 @@ class ImageResultsController < ApplicationController
       "Erotica" => nil,
       "Suggestive" => nil,
       "Drugs" => nil,
-      "Gore" => nil }
+      "Gore" => nil
+    }
     @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
     @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
     @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
     @categories["Suggestive"] = (@result.suggestive * 100) if @result.suggestive >= 0.05
     @categories["Drugs"] = (@result.drugs * 100) if @result.drugs >= 0.05
     @categories["Gore"] = (@result.gore * 100) if @result.gore >= 0.05
-    @data = @categories.map { |category, value| [category, value] if value }.compact
+
+    colorarray = []
+    @categories.each do |name, value|
+      if value.to_i > 40
+        colorarray << "#ff6384cc"
+      elsif value.to_i > 20
+        colorarray << "#ffcc66cc"
+      else
+        colorarray << "#00cc99cc"
+      end
+    end
+
+    Chartkick.options = {
+      # [0] is safe, [1] is warning, [2] is danger
+      colors: colorarray
+    }
+
     authorize @result
   end
 
