@@ -2,13 +2,19 @@
   <div class="row justify-content-center">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <%= link_to image_results_path, class: "back-button" do %>
-        <i class="fa-solid fa-arrow-left"></i> Back to My Results
+        <i class="fa-solid fa-arrow-left mt-2"></i> Back to My Results
       <% end %>
+<<<<<<< HEAD
+      <h3 class="mt-1 mg-2">Details</h3>
+=======
       <h1>Details</h1>
 
+>>>>>>> master
       <div class="row">
         <div>
-          <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+          <div class="w-100 overflow-hidden">
+            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+          </div>
           <% if @result.profanity_type %>
             <h2>Text related risks</h2>
             <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
@@ -22,9 +28,9 @@
         </div>
         <div>
           <% if @categories.values.all?(nil) %>
-            <h2>No imagery related risks</h2>
+            <h3 class="mt-3">No imagery related risks</h3>
           <% else %>
-            <h2>Imagery related risks:</h2>
+            <h3 class="mt-3">Imagery related risks:</h3>
             <% if @danger %>
               <p><strong>Your image is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
             <% end %>
