@@ -4,12 +4,7 @@
       <%= link_to image_results_path, class: "back-button" do %>
         <i class="fa-solid fa-arrow-left mt-2"></i> Back to My Results
       <% end %>
-<<<<<<< HEAD
       <h3 class="mt-1 mg-2">Details</h3>
-=======
-      <h1>Details</h1>
-
->>>>>>> master
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
@@ -40,19 +35,16 @@
             <div class="w-75">
               <%= bar_chart(@categories) %>
             </div>
-
           <% end %>
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-           <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
+            <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
           </a>
-
-            <% end %>
-
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <%# const categories = [
+</div>
+<%# const categories = [
     { label: "sexual activity", value: sexualActivityResult },
     { label: "Sexual Display", value: sexualDisplayResult },
     { label: "Erotic", value: eroticResult },
@@ -60,10 +52,10 @@
     { label: "Drugs", value: drugsResult },
     { label: "Gore", value: goreResult }
   ]; %>
-  <%# <div class="w-75">
+<%# <div class="w-75">
   <canvas id="myChart" class="chart-canvas"></canvas>
 </div> %>
-  <%#
+<%#
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
