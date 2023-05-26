@@ -3,7 +3,6 @@
 //= require Chart.bundle
 import "chartkick/chart.js"
 import "chartkick"
-import "Chart.bundle"
 
 import "@hotwired/turbo-rails"
 import "./controllers"
