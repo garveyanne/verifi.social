@@ -9,6 +9,7 @@
         <div>
           <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
           <% if @result.profanity_type %>
+            <h2>Text related risks</h2>
             <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
           <% end %>
           <% if @result.profanity_type && @result.profanity_match %>
@@ -22,6 +23,10 @@
           <% if @categories.values.all?(nil) %>
             <h2>No imagery related risks</h2>
           <% else %>
+            <h2>Imagery related risks:</h2>
+            <p>High: <%= @danger.join(", ") %></p>
+            <p>Caution: <%= @caution.join(", ")  %></p>
+            <p>Safe: <%= @safe.join(", ")  %></p>
             <div class="w-75">
               <%= bar_chart(@categories) %>
             </div>
