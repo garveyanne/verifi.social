@@ -7,5 +7,5 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import Chart from 'stimulus-chartjs'
-application.register('chart', Chart)
+import LoadingController from "./loading_controller"
+application.register("loading", LoadingController)
