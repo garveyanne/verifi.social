@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
 
   def index
-    @posts = policy_scope(Post)
+    @posts = policy_scope(Post).order(updated_at: :desc)
     if params[:query].present?
       @posts = @posts.search_by_title_and_content(params[:query])
     end
