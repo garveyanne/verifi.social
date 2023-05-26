@@ -5,7 +5,21 @@
         <i class="fa-solid fa-arrow-left"></i> Back to Community
       <% end %>
       <div class="post-card mb-2">
-        <h1><img class="avatar" alt="avatar" src="https://cdn1.iconfinder.com/data/icons/user-interface-colorful/48/user-1024.png" /> <%= @post.user.user_name %></h1>
+        <div class="d-flex justify-content-between">
+          <div>
+            <h1><img class="avatar" alt="avatar" src="https://cdn1.iconfinder.com/data/icons/user-interface-colorful/48/user-1024.png" /> <%= @post.user.user_name %></h1>
+          </div>
+          <div>
+            <% if policy(@post).edit? %>
+              <%= link_to edit_post_path(@post), class: "back-button" do %>
+                <i class="fa-regular fa-pen-to-square"></i>
+              <% end %>
+              <%= link_to @post, data: { turbo_method: :delete, turbo_confirm: "Delete post?" }, class: "back-button" do %>
+                <i class="fa-solid fa-xmark"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
         <h2><%= @post.title %></h2>
         <p class="font-weight-light"><%= @post.content %></p>
         <% if @post.photo.attached? %>
@@ -32,9 +46,5 @@
     <%= link_to new_post_path, class: "button-post", id: "sticky-button" do %>
       <i class="fa-solid fa-plus"></i>
     <%end%>
-    <% if policy(@post).edit? %>
-      <%= link_to "Edit", edit_post_path(@post), class: "button" %>
-      <%= link_to "Delete", @post, data: { turbo_method: :delete, turbo_confirm: "Delete post?" }, class: "button" %>
-    <% end %>
   </div>
 </div>
