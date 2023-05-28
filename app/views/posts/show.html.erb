@@ -30,7 +30,7 @@
       <%= simple_form_for [@post, @comment] do |f| %>
         <div class="m-t2">
           <%= f.input :content, label: "Comment as #{current_user.user_name}", input_html: {class: "bg-white", placeholder: "What are your thoughts?", rows: "5", style: "max-width: 800px" } %>
-          <%= f.submit class: "button" %>
+          <%= f.submit class: "button-login" %>
         </div>
       <% end %>
       <% @comments.each do |comment| %>
