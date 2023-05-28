@@ -1,10 +1,16 @@
 <div class="container">
-  <h1>Edit post Post</h1>
-  <%= simple_form_for @post do |f| %>
-    <%= f.input :title%>
-    <%= f.input :content %>
-    <%= f.input :photo, as: :file %>
-    <%= f.input :tag_list, label: "Enter tags" %>
-    <%= f.submit %>
-  <% end %>
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="form-login">
+        <h1>Edit post</h1>
+        <%= simple_form_for @post do |f| %>
+          <%= f.input :title%>
+          <%= f.input :content %>
+          <%= f.input :photo, as: :file %>
+          <%= f.input :tag_list, label: "Enter tags" %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
