@@ -5,6 +5,7 @@ require "rails/all"
 # added after
 require 'net/http'
 require 'json'
+require 'chunky_png'
 
 
 # Require the gems listed in Gemfile, including any gems

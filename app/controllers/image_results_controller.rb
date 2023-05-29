@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'fastimage'
+
 class ImageResultsController < ApplicationController
   before_action :verify_authenticity_token, only: [:create]
 
@@ -7,6 +10,7 @@ class ImageResultsController < ApplicationController
 
   def show
     @result = ImageResult.find(params[:id])
+    @cell = Cell.new
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
@@ -31,6 +35,7 @@ class ImageResultsController < ApplicationController
       else
         colorarray << "#00cc99cc"
       end
+
     end
 
     Chartkick.options = {
@@ -38,7 +43,6 @@ class ImageResultsController < ApplicationController
       colors: colorarray,
       max: 100
     }
-
     @danger = []
     @caution = []
     @safe = []
@@ -51,8 +55,8 @@ class ImageResultsController < ApplicationController
         @safe << name
       end
     end
-
     authorize @result
+    @grid_size = 5
   end
 
   def new
@@ -67,6 +71,10 @@ class ImageResultsController < ApplicationController
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_result_path(@result)
+      size = FastImage.size(@result.photo.url)
+      @result.width = size[0]
+      @result.height = size[1]
+      @result.save
     else
       render :new, status: :uprocessable_entity
     end

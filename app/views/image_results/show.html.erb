@@ -9,6 +9,22 @@
         <div>
           <div class="w-100 overflow-hidden">
             <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+            <div class="m-3">
+              <% if @result.cells.empty? %>
+                <%= simple_form_for [@result, @cell] do |f| %>
+                  <%= f.submit %>
+                <% end %>
+              <% else %>
+                <p>See image breakdown below</p>
+              <% end %>
+            </div>
+            <div>
+              <div class="grid-container w-100">
+                <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
+                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-warning" if cell.danger? }") %>
+                <% end %>
+              </div>
+            </div>
           </div>
           <div Class=" mt-3 mb-2">
             <% if @result.profanity_type %>
