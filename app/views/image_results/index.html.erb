@@ -3,7 +3,7 @@
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <h3 class="mb-3">My Results</h3>
       <div class="card-grid mb-5">
-        <% @results.each do |result| %>
+        <% @results.order(created_at: :desc).each do |result| %>
           <div class="post-card-result">
             <%= link_to image_result_path(result) do %>
               <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
