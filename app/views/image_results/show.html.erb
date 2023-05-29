@@ -21,14 +21,7 @@
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                  <% if @danger.empty? %>
-                    <%= image_tag(cell.photo_url, class: "w-100") %>
-                  <% else %>
-                    <%= image_tag(cell.photo_url, class: "w-100") %>
-                    <% @danger.each do |cell| %>
-                      <% class: "w-100 border border-warning" %>
-                    <% end %>
-                  <% end %>
+                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-warning" if @danger.includes(cell) }") %>
                 <% end %>
               </div>
             </div>

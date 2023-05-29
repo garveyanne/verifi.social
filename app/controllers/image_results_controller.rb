@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'fastimage'
 
 class ImageResultsController < ApplicationController
   before_action :verify_authenticity_token, only: [:create]
@@ -69,6 +70,7 @@ class ImageResultsController < ApplicationController
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_result_path(@result)
+      size = FastImage.size(result.photo.url)
       raise
     else
       render :new, status: :uprocessable_entity

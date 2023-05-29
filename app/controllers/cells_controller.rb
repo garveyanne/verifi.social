@@ -22,22 +22,6 @@ class CellsController < ApplicationController
     @categories["Drugs"] = (@Cell.drugs * 100) if @Cell.drugs >= 0.05
     @categories["Gore"] = (@Cell.gore * 100) if @Cell.gore >= 0.05
 
-    # colorarray = []
-    # @categories.each do |name, value|
-    #   if value.to_i > 40
-    #     colorarray << "#ff6384cc"
-    #   elsif value.to_i > 20
-    #     colorarray << "#ffcc66cc"
-    #   else
-    #     colorarray << "#00cc99cc"
-    #   end
-    # end
-    # Chartkick.options = {
-    #   # [0] is safe, [1] is warning, [2] is danger
-    #   colors: colorarray,
-    #   max: 100
-    # }
-
     @danger = []
     @caution = []
     @safe = []
@@ -60,7 +44,7 @@ class CellsController < ApplicationController
 
   def create
     @result = ImageResult.find(params[:image_result_id])
-    grid_images = image_into_grid(@result)
+    image_into_grid(@result)
     verifi(@result)
     redirect_to image_results_path(@result)
   end
