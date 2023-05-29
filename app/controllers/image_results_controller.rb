@@ -35,6 +35,7 @@ class ImageResultsController < ApplicationController
       else
         colorarray << "#00cc99cc"
       end
+
     end
 
     Chartkick.options = {
@@ -70,8 +71,10 @@ class ImageResultsController < ApplicationController
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_result_path(@result)
-      size = FastImage.size(result.photo.url)
-      raise
+      size = FastImage.size(@result.photo.url)
+      @result.width = size[0]
+      @result.height = size[1]
+      @result.save
     else
       render :new, status: :uprocessable_entity
     end

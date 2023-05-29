@@ -7,36 +7,6 @@ class CellsController < ApplicationController
     @cells = policy_scope(Cell)
   end
 
-  def show
-    @cell = Cell.find(params[:image_result_id])
-    @categories = {
-      "Sexual Activity" => nil,
-      "Sexual Display" => nil,
-      "Erotica" => nil,
-      "Drugs" => nil,
-      "Gore" => nil
-    }
-    @categories["Sexual Activity"] = (@Cell.sexual_activity * 100) if @Cell.sexual_activity >= 0.05
-    @categories["Sexual Display"] = (@Cell.sexual_display * 100) if @Cell.sexual_display >= 0.05
-    @categories["Erotica"] = (@Cell.erotica * 100) if @Cell.erotica >= 0.05
-    @categories["Drugs"] = (@Cell.drugs * 100) if @Cell.drugs >= 0.05
-    @categories["Gore"] = (@Cell.gore * 100) if @Cell.gore >= 0.05
-
-    @danger = []
-    @caution = []
-    @safe = []
-    @categories.each do |label|
-      if value.to_i > 40
-        @danger << label
-      elsif value.to_i > 20
-        @caution << label
-      else
-        @safe << label
-      end
-    end
-    authorize @Cell
-  end
-
   def new
     @cell = Cell.new
     authorize @cell
@@ -50,16 +20,15 @@ class CellsController < ApplicationController
   end
 
   def image_into_grid(result)
-    cloudinary_url = result.photo.url
-    image = ChunkyPNG::Image.from_blob(URI.open(cloudinary_url).read)
+    # cloudinary_url = result.photo.url
+    # image = ChunkyPNG::Image.from_blob(URI.open(cloudinary_url).read)
     # will break photo into 36 smaller photo grid (6x6)
     grid_size = 6
     # determines size of each grid square
-    cell_width = image.width / grid_size
-    cell_height = image.height / grid_size
+    cell_width = result.width / grid_size
+    cell_height = result.height / grid_size
     # itterate over the image grid cells
     # set the x and y axis points (top left corner of the cell)
-    grid_images = []
     (0...grid_size).each do |row|
       (0...grid_size).each do |col|
         x = col * cell_width
@@ -68,7 +37,6 @@ class CellsController < ApplicationController
         authorize Cell.create(x_coor: x, y_coor: y, photo_url: url, image_result: result, row: row, col: col)
       end
     end
-    return grid_images
   end
 
   def verifi(result)
