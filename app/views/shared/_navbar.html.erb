@@ -3,13 +3,16 @@
     <%= link_to "/", class: "navbar-brand" do %>
       <h1 class="mt-1">Verifi</h1>
     <% end %>
-    <div>
+    <div class="me-2 mt-1">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <div class="nav-item dropdown">
-            <i class="fa-solid fa-bell dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" ></i>
-            <%= current_user.notifications.where(unread: true).count %>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <i class="fa-solid fa-bell fs-2" data-bs-toggle="dropdown" aria-expanded="false" ></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-text">
+              <%= current_user.notifications.where(unread: true).count %>
+              <span class="visually-hidden">unread messages</span>
+            </span>
+            <ul class="dropdown-menu dropdown-menu-end position-fixed me-3">
               <% current_user.notifications.where(unread: true).each do |notification| %>
                 <li><%= link_to "New comment", post_path(notification.post), class:"dropdown-item" %></li>
               <% end %>

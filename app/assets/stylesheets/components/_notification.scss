@@ -1,13 +1,12 @@
-// .notification-icon {
-//   font-size: 24px;
-// }
+.notification-icon {
+  font-size: 24px;
+}
 
-// .notification-text {
-//   position: absolute;
-//   top: -10px;
-//   right: -6px;
-//   padding: 0px 6px;
-//   border-radius: 50%;
-//   background: #927AC1;
-//   color: white;
-// }
+.notification-text {
+  background-color: #927AC1;
+  color: white;
+}
+
+.nav-item:has(.fa-bell.show) span{
+  display: none;
+}
