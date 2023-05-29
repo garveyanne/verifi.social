@@ -48,9 +48,37 @@
               <p><strong>Low risk for removal</strong></p>
             <% else %>
               <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
-              <p>High: <%= @danger.join(", ") %></p>
-              <p>Caution: <%= @caution.join(", ")  %></p>
-              <p>Safe: <%= @safe.join(", ")  %></p>
+              <% if !@danger.empty? %>
+                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %></p>
+                <div class="collapse" id="dangercollapse" >
+                  <% @danger.each do |cat| %>
+                    <p><%= cat %></p>
+                    <p><%= @descriptions[cat] %></p>
+                  <% end %>
+                </div>
+                <% end %>
+              <% if !@caution.empty? %>
+                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %></p>
+                <div class="collapse" id="cautioncollapse" >
+                  <% @caution.each do |cat| %>
+                    <p><%= cat %></p>
+                    <p><%= @descriptions[cat] %></p>
+                  <% end %>
+                </div>
+                <% end %>
+              <% if !@safe.empty? %>
+                <p>Safe:
+                  <% @safe.each_with_index do |cat, index|%>
+                    <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %></span>
+                  <% end %>
+                </p>
+                <% @safe.each_with_index do |cat, index| %>
+                  <div class="collapse" id="safecollapse<%=index%>" >
+                    <p><%= cat %></p>
+                    <p><%= @descriptions[cat] %></p>
+                  </div>
+                <% end %>
+              <% end %>
             <% end %>
             <div class="w-75 mb-3">
               <%= bar_chart(@categories) %>
