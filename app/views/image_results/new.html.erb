@@ -1,22 +1,19 @@
 <div data-controller="loading">
-
-
   <div id="preloader" data-loading-target="spinner">
     <div id="loader"></div>
   </div>
-
-
-  <div class="container mt-3">
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-        <h2>Verifi photo</h2>
-        <div class="results-container mt-3">
-          <%= simple_form_for @result do |f| %>
-            <%= f.input :photo, label: false, as: :file, input_html: {class: "bg-white"} %>
-            <%= f.submit class: "button", data:{action:"click->loading#showSpinner"} %>
-          <% end %>
+      <div class="col-12 col-sm-4">
+        <div class="form-login">
+          <h2>Verifi photo</h2>
+          <div class="results-container mt-3">
+            <%= simple_form_for @result do |f| %>
+              <%= f.input :photo, label: false, as: :file, input_html: {class: "bg-white"} %>
+              <%= f.submit class: "button-login", data:{action:"click->loading#showSpinner"} %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

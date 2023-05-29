@@ -1,7 +1,13 @@
 <div class="container">
-  <h1>Add a comment</h1>
-  <%= simple_form_for [@post, @comment] do |f| %>
-    <%= f.input :content %>
-    <%= f.submit %>
-  <% end %>
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="form-login">
+        <h1>Add a comment</h1>
+        <%= simple_form_for [@post, @comment] do |f| %>
+          <%= f.input :content %>
+          <%= f.submit, class: "button-login" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

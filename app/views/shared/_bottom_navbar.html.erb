@@ -1,0 +1,107 @@
+<% if user_signed_in? %>
+  <nav class="mobile-bottom-nav row">
+    <div class="mobile-bottom-nav__item mobile-bottom-nav__item--active col-2">
+      <div class="mobile-bottom-nav__item-content first-icon-margin">
+        <%= link_to :back do %>
+          <div class="nav-line-height">
+            <i class="fa-solid fa-arrow-left-long"></i><br>
+            back
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item col-2">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/image_results" do %>
+          <div class="nav-line-height">
+            <i class="fa-regular fa-file-lines"></i><br>
+            results
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item col-2">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/image_results/new" do %>
+          <div class="nav-line-height">
+            <i class="fa-solid fa-plus"></i><br>
+            verifi
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item col-2">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/posts" do %>
+          <div class="nav-line-height">
+            <i class="fa-solid fa-people-arrows"></i><br>
+            community
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item col-2">
+      <div class="mobile-bottom-nav__item-content last-icon-margin">
+        <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %>
+          <div class="nav-line-height">
+            <i class="fa-regular fa-user"></i><br>
+            log out
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+<% else %>
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav__item mobile-bottom-nav__item--active">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to :back do %>
+          <i class="fa-solid fa-arrow-left-long"></i>
+        <% end %>
+        <%= link_to :back do %>
+          back
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/image_results" do %>
+          <i class="fa-regular fa-file-lines"></i>
+        <% end %>
+        <%= link_to "/image_results" do %>
+          results
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/image_results/new" do %>
+          <i class="fa-solid fa-plus"></i>
+        <% end %>
+        <%= link_to "/image_results/new" do %>
+          verifi
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to "/posts" do %>
+          <i class="fa-solid fa-people-arrows"></i>
+        <% end %>
+        <%= link_to "/posts" do %>
+          community
+        <% end %>
+      </div>
+    </div>
+    <div class="mobile-bottom-nav__item">
+      <div class="mobile-bottom-nav__item-content">
+        <%= link_to new_user_session_path do %>
+          <i class="fa-regular fa-user"></i>
+        <% end%>
+        <%= link_to new_user_session_path do %>
+          login
+        <% end%>
+      </div>
+    </div>
+  </nav>
+<% end %>
