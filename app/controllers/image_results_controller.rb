@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'fastimage'
+
 class ImageResultsController < ApplicationController
   before_action :verify_authenticity_token, only: [:create]
 
@@ -6,7 +9,20 @@ class ImageResultsController < ApplicationController
   end
 
   def show
+    @descriptions = {
+      "Sexual Activity" => "Sexual intercourse with clear nudity, including genital-genital and oral-genital activity
+      Clear masturbation\n Direct touching of genitals
+      Sex toys involved in sexual activity: penetrating mouth, anus or genitals. Includes dildos, sex dolls, fleshlights, plugs.
+      Semen or vaginal fluids on faces or body parts",
+      "Sexual Display" => "Exposure of genitals/sexual organs\n Exposed genitalia (transgender included), vulva, anus, male penises, both erect and non-erect, or testicles, either directly visible or through transparent, see-through or sheer clothing\n Sex toys not in use: dildos, sex dolls, fleshlights, butt plugs & beads",
+      "Erotica" => "Exposure of breasts, nude buttocks or the pubic region\n Nude female breasts, female breasts with visible nipples or areola\n Nude buttocks, both male and female, in a non-sexual setting\n Pubic region, pubic hair, female crotch region or area around genitals with no genitals visible",
+      "Suggestive" => "Situations that can be considered sexually suggestive or inappropriate, but do not include full nudity or sexual acts",
+      "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
+      "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
+    }
+
     @result = ImageResult.find(params[:id])
+    @cell = Cell.new
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
@@ -31,6 +47,7 @@ class ImageResultsController < ApplicationController
       else
         colorarray << "#00cc99cc"
       end
+
     end
 
     Chartkick.options = {
@@ -38,7 +55,6 @@ class ImageResultsController < ApplicationController
       colors: colorarray,
       max: 100
     }
-
     @danger = []
     @caution = []
     @safe = []
@@ -51,8 +67,8 @@ class ImageResultsController < ApplicationController
         @safe << name
       end
     end
-
     authorize @result
+    @grid_size = 5
   end
 
   def new
@@ -67,6 +83,10 @@ class ImageResultsController < ApplicationController
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_result_path(@result)
+      size = FastImage.size(@result.photo.url)
+      @result.width = size[0]
+      @result.height = size[1]
+      @result.save
     else
       render :new, status: :uprocessable_entity
     end
