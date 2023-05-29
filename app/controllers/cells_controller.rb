@@ -23,7 +23,7 @@ class CellsController < ApplicationController
     # cloudinary_url = result.photo.url
     # image = ChunkyPNG::Image.from_blob(URI.open(cloudinary_url).read)
     # will break photo into 36 smaller photo grid (6x6)
-    grid_size = 6
+    grid_size = 5
     # determines size of each grid square
     cell_width = result.width / grid_size
     cell_height = result.height / grid_size

@@ -56,7 +56,7 @@ class ImageResultsController < ApplicationController
       end
     end
     authorize @result
-    @grid_size = 6
+    @grid_size = 5
   end
 
   def new
