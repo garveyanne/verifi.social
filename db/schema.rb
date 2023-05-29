@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_035246) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_004255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_035246) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "cells", force: :cascade do |t|
+    t.bigint "image_result_id", null: false
+    t.float "sexual_activity"
+    t.float "sexual_display"
+    t.float "erotica"
+    t.float "drugs"
+    t.float "gore"
+    t.integer "x_coor"
+    t.integer "y_coor"
+    t.integer "row"
+    t.integer "col"
+    t.string "photo_url"
+    t.string "profanity_type"
+    t.string "profanity_match"
+    t.string "profanity_intensity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["image_result_id"], name: "index_cells_on_image_result_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -142,6 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_035246) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cells", "image_results"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "image_results", "users"

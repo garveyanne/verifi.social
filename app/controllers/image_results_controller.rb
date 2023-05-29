@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class ImageResultsController < ApplicationController
   before_action :verify_authenticity_token, only: [:create]
 
@@ -7,6 +9,7 @@ class ImageResultsController < ApplicationController
 
   def show
     @result = ImageResult.find(params[:id])
+    @cell = Cell.new
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
@@ -38,7 +41,6 @@ class ImageResultsController < ApplicationController
       colors: colorarray,
       max: 100
     }
-
     @danger = []
     @caution = []
     @safe = []
@@ -51,8 +53,8 @@ class ImageResultsController < ApplicationController
         @safe << name
       end
     end
-
     authorize @result
+    @grid_size = 6
   end
 
   def new

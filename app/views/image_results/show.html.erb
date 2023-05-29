@@ -9,6 +9,29 @@
         <div>
           <div class="w-100 overflow-hidden">
             <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+            <div class="m-3">
+              <% if @result.cells.empty? %>
+                <%= simple_form_for [@result, @cell] do |f| %>
+                  <%= f.submit %>
+                <% end %>
+              <% else %>
+                <p>See image breakdown below</p>
+              <% end %>
+            </div>
+            <div>
+              <div class="grid-container w-100">
+                <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
+                  <% if @danger.empty? %>
+                    <%= image_tag(cell.photo_url, class: "w-100") %>
+                  <% else %>
+                    <%= image_tag(cell.photo_url, class: "w-100") %>
+                    <% @danger.each do |cell| %>
+                      <% class: "w-100 border border-warning" %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
           </div>
           <% if @result.profanity_type %>
             <h2>Text related risks: </h2>
@@ -25,7 +48,7 @@
           <% if @categories.values.all?(nil) %>
             <h3 class="mt-3">No imagery related risks</h3>
           <% else %>
-             <h3 class="mt-3">Imagery related risks:</h3>
+            <h3 class="mt-3">Imagery related risks:</h3>
             <% if @danger.empty? && @caution.empty? %>
               <p><strong>Low risk for removal</strong></p>
             <% else %>
