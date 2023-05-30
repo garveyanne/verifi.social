@@ -4,7 +4,7 @@ class Cell < ApplicationRecord
 
   def danger?
     @danger = false
-    if sexual_activity > 0.4 || sexual_display > 0.4 || erotica > 0.4 || drugs > 0.4 || gore > 0.4
+    if sexual_activity > 0.6 || sexual_display > 0.6 || erotica > 0.6 || drugs > 0.6 || gore > 0.6
       @danger = true
     end
     @danger
