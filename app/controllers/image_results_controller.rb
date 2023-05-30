@@ -55,18 +55,11 @@ class ImageResultsController < ApplicationController
       colors: colorarray,
       max: 100
     }
-    @danger = []
-    @caution = []
-    @safe = []
-    @categories.each do |name, value|
-      if value.to_i > 40
-        @danger << name
-      elsif value.to_i > 20
-        @caution << name
-      else
-        @safe << name
-      end
-    end
+
+    @danger = @result.risk_category[:danger]
+    @caution = @result.risk_category[:caution]
+    @safe = @result.risk_category[:safe]
+
     authorize @result
     @grid_size = 5
   end
