@@ -9,6 +9,7 @@ class ImageResultsController < ApplicationController
   end
 
   def show
+    @image_result = ImageResult.new
     @result = ImageResult.find(params[:id])
     @cell = Cell.new
     @categories = {
@@ -72,7 +73,13 @@ class ImageResultsController < ApplicationController
   end
 
   def create
-    @result = ImageResult.new(result_params)
+    if params[:url_image]
+      @result = ImageResult.new
+      file = URI.open(params[:url_image])
+      @result.photo.attach(io: file, filename: "photo.png")
+    else
+      @result = ImageResult.new(result_params)
+    end
     @result.user = current_user
     authorize @result
     if @result.save

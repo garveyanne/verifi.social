@@ -14,15 +14,20 @@
             <div class="m-3">
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit %>
+                  <%= f.submit value="Break down image"%>
                 <% end %>
               <% else %>
                 <p>See image breakdown below</p>
               <% end %>
             </div>
-            <button data-action="click->pixelate-image#start">
-              Pixelate Image
-            </button>
+            <div class="">
+              <button data-action="click->pixelate-image#start">Blur</button>
+              <form action="/image_results" method="POST">
+                <input type="text" data-pixelate-image-target="input" hidden name="url_image">
+                <% form_authenticity_token %>
+                <input type="submit" value="Re-verifi">
+              </form>
+            </div>
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>

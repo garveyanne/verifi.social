@@ -1,3 +1,4 @@
-<%= cl_image_tag(src, :transformation=>[
+<%# <%= cl_image_tag(src, :transformation=>[
   {:effect=>"blur_region:1000", :height=>50, :width=>50, :x=>x, :y=>y}
   ]) %>
+<img src="https://res.cloudinary.com/di4ap7ugr/image/upload/e_blur_region:1000,h_100,w_100,x_<%= x %>,y_<%= y %>/v1/development/<%= src %>" alt="">
