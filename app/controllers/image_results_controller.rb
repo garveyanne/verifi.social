@@ -47,7 +47,6 @@ class ImageResultsController < ApplicationController
       else
         colorarray << "#00cc99cc"
       end
-
     end
 
     Chartkick.options = {
