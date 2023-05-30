@@ -1,34 +1,27 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-      <%= link_to image_results_path, class: "back-button" do %>
-        <i class="fa-solid fa-arrow-left mt-2"></i> My Results
-      <% end %>
-      <h3 class="mt-1 mg-2">Details</h3>
+      <h3 class="mt-2 mg-2">Details</h3>
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
-            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
-            <div class="m-3">
-              <% if @result.cells.empty? %>
-                <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit %>
-                <% end %>
-              <% else %>
-                <p>See image breakdown below</p>
+            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
+            <% if @result.cells.empty? %>
+              <%= simple_form_for [@result, @cell] do |f| %>
+                <%= f.submit class: "button mt-3" %>
               <% end %>
-            </div>
+            <% end %>
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-warning" if cell.danger? }") %>
+                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
                 <% end %>
               </div>
             </div>
           </div>
           <div Class=" mt-3 mb-2">
             <% if @result.profanity_type %>
-              <h2>Text related risks: </h2>
+              <h3>Text related risks on the image: </h3>
               <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
             <% end %>
             <% if @result.profanity_type && @result.profanity_match %>
@@ -49,32 +42,32 @@
             <% else %>
               <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
               <% if !@danger.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %></p>
-                <div class="collapse" id="dangercollapse" >
+                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %>▼</p>
+                <div class="collapse border border-1 p-3"" id="dangercollapse" >
                   <% @danger.each do |cat| %>
-                    <p><%= cat %></p>
+                    <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
                   <% end %>
                 </div>
-                <% end %>
+              <% end %>
               <% if !@caution.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %></p>
-                <div class="collapse" id="cautioncollapse" >
+                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %>▼</p>
+                <div class="collapse border border-1 p-3" id="cautioncollapse" >
                   <% @caution.each do |cat| %>
-                    <p><%= cat %></p>
+                    <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
                   <% end %>
                 </div>
-                <% end %>
+              <% end %>
               <% if !@safe.empty? %>
                 <p>Safe:
                   <% @safe.each_with_index do |cat, index|%>
-                    <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %></span>
+                    <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %>▼</span>
                   <% end %>
                 </p>
                 <% @safe.each_with_index do |cat, index| %>
-                  <div class="collapse" id="safecollapse<%=index%>" >
-                    <p><%= cat %></p>
+                  <div class="collapse  border border-1 p-3"" id="safecollapse<%=index%>" >
+                    <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
                   </div>
                 <% end %>
@@ -85,7 +78,11 @@
             </div>
           <% end %>
           <div class="mb-5">
+
             <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+
+            <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+
               <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
             <% end %>
           </div>
