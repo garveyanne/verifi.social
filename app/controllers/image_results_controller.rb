@@ -16,7 +16,6 @@ class ImageResultsController < ApplicationController
       Semen or vaginal fluids on faces or body parts",
       "Sexual Display" => "Exposure of genitals/sexual organs\n Exposed genitalia (transgender included), vulva, anus, male penises, both erect and non-erect, or testicles, either directly visible or through transparent, see-through or sheer clothing\n Sex toys not in use: dildos, sex dolls, fleshlights, butt plugs & beads",
       "Erotica" => "Exposure of breasts, nude buttocks or the pubic region\n Nude female breasts, female breasts with visible nipples or areola\n Nude buttocks, both male and female, in a non-sexual setting\n Pubic region, pubic hair, female crotch region or area around genitals with no genitals visible",
-      "Suggestive" => "Situations that can be considered sexually suggestive or inappropriate, but do not include full nudity or sexual acts",
       "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
       "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
     }
@@ -27,14 +26,12 @@ class ImageResultsController < ApplicationController
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
       "Erotica" => nil,
-      "Suggestive" => nil,
       "Drugs" => nil,
       "Gore" => nil
     }
     @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
     @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
     @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
-    @categories["Suggestive"] = (@result.suggestive * 100) if @result.suggestive >= 0.05
     @categories["Drugs"] = (@result.drugs * 100) if @result.drugs >= 0.05
     @categories["Gore"] = (@result.gore * 100) if @result.gore >= 0.05
 
@@ -106,7 +103,6 @@ class ImageResultsController < ApplicationController
     result.sexual_activity = output["nudity"]["sexual_activity"]
     result.sexual_display = output["nudity"]["sexual_display"]
     result.erotica = output["nudity"]["erotica"]
-    result.suggestive = output["nudity"]["suggestive"]
     result.drugs = output["drugs"]
     result.gore = output["gore"]["prob"]
     if output["text"]["profanity"][0]
