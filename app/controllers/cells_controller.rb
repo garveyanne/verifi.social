@@ -53,6 +53,11 @@ class CellsController < ApplicationController
       uri.query = URI.encode_www_form(params)
       response = Net::HTTP.get_response(uri)
       output = JSON.parse(response.body)
+      p "CELL"
+      p cell
+      p cell.sexual_activity
+      p output["nudity"]["sexual_activity"]
+      p output["nudity"]
       cell.sexual_activity = output["nudity"]["sexual_activity"]
       cell.sexual_display = output["nudity"]["sexual_display"]
       cell.erotica = output["nudity"]["erotica"]
