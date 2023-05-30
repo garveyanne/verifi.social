@@ -85,9 +85,6 @@
             </div>
           <% end %>
           <div class="mb-5">
-            <%= link_to "Tips", tips_path, class:"button mb-5" %>
-            <%= link_to "Community", posts_path, class:"button mb-5" %>
-            <%= link_to "Verifi again", new_image_result_path, class:"button mb-5" %>
             <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
               <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
             <% end %>
