@@ -56,8 +56,9 @@ class CellsController < ApplicationController
       p "CELL"
       p cell
       p cell.sexual_activity
-      p output["nudity"]["sexual_activity"]
+      p output
       p output["nudity"]
+      p output["nudity"]["sexual_activity"]
       cell.sexual_activity = output["nudity"]["sexual_activity"]
       cell.sexual_display = output["nudity"]["sexual_display"]
       cell.erotica = output["nudity"]["erotica"]
