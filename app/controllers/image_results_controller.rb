@@ -9,9 +9,7 @@ class ImageResultsController < ApplicationController
   end
 
   def show
-
     @image_result = ImageResult.new
-
     @descriptions = {
       "Sexual Activity" => "Sexual intercourse with clear nudity, including genital-genital and oral-genital activity
       Clear masturbation\n Direct touching of genitals
@@ -22,8 +20,6 @@ class ImageResultsController < ApplicationController
       "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
       "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
     }
-
-
     @result = ImageResult.find(params[:id])
     @cell = Cell.new
     @categories = {
