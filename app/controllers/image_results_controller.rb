@@ -29,11 +29,11 @@ class ImageResultsController < ApplicationController
       "Drugs" => nil,
       "Gore" => nil
     }
-    @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
-    @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
-    @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
-    @categories["Drugs"] = (@result.drugs * 100) if @result.drugs >= 0.05
-    @categories["Gore"] = (@result.gore * 100) if @result.gore >= 0.05
+    @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity.to_f >= 0.05
+    @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display.to_f >= 0.05
+    @categories["Erotica"] = (@result.erotica * 100) if @result.erotica.to_f >= 0.05
+    @categories["Drugs"] = (@result.drugs * 100) if @result.drugs.to_f >= 0.05
+    @categories["Gore"] = (@result.gore * 100) if @result.gore.to_f >= 0.05
 
     colorarray = []
     @categories.each do |name, value|
