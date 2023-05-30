@@ -40,7 +40,7 @@ class CellsController < ApplicationController
   end
 
   def verifi(result)
-    result.cells.each do |cell|
+    result.cells.first(3).each do |cell|
       ######
       uri = URI('https://api.sightengine.com/1.0/check.json')
       params = {
