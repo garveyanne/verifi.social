@@ -21,11 +21,11 @@
               <% end %>
             </div>
             <div class="">
-              <button data-action="click->pixelate-image#start">Blur</button>
+              <button data-action="click->pixelate-image#start">Click to start blurring</button>
               <form action="/image_results" method="POST">
                 <input type="text" data-pixelate-image-target="input" hidden name="url_image">
                 <% form_authenticity_token %>
-                <input type="submit" value="Re-verifi">
+                <input type="submit" value="Click to Re-verifi">
               </form>
             </div>
             <div>
