@@ -1,17 +1,3 @@
-
-.card-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.post-card-result {
-border: 1px solid rgba(210, 207, 207, 0.685);
-vertical-align: baseline;
-border-radius: 3px;
-max-width: 800px;
-position: relative;
-}
-
 .post-card {
   border: 1px solid rgba(210, 207, 207, 0.685);
   padding: 16px;
@@ -21,13 +7,7 @@ position: relative;
   max-width: 800px;
   }
 
-.xmark {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: white;
-  font-size: 20px;
-}
+
 
 .post-card h1{
 font-size: 14px;

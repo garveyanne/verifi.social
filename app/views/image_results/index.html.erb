@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row justify-content-center mt-3">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-      <h3 class="mb-3 mt-3">My Results</h3>
+      <h3 class="mb-4 mt-4 text-center">My Results</h3>
       <div class="card-grid mb-5">
         <% @results.order(created_at: :desc).each do |result| %>
           <div class="post-card-result">
             <%= link_to image_result_path(result), class:"no-text-decoration" do %>
               <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
-              <div class="p-2">
-                <p class="mt-1 mb-0"> Created on <br>
-                  <%= result.created_at.strftime("%m-%d-%Y") %></p>
+              <div class="ps-2 pe-2">
+                <p class="mt-1 mb-0">
+                  <%= result.created_at.strftime("%B %d, %Y") %></p>
                 <% if result.risk_category[:danger].empty? && result.risk_category[:caution].empty? %>
-                  <p> No risk </p>
+                  <p class="risk-label no-risk"> No risk </p>
                 <% else %>
-                  <p> At risk </p>
+                  <p class="risk-label at-risk"> At risk </p>
                 <% end %>
               </div>
             <% end %>
