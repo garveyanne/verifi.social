@@ -12,11 +12,11 @@ class ImageResult < ApplicationRecord
       "Gore" => nil
     }
 
-    @categories["Sexual Activity"] = (sexual_activity * 100) if sexual_activity >= 0.05
-    @categories["Sexual Display"] = (sexual_display * 100) if sexual_display >= 0.05
-    @categories["Erotica"] = (erotica * 100) if erotica >= 0.05
-    @categories["Drugs"] = (drugs * 100) if drugs >= 0.05
-    @categories["Gore"] = (gore * 100) if gore >= 0.0
+    @categories["Sexual Activity"] = (sexual_activity.to_f * 100) if sexual_activity.to_f >= 0.05
+    @categories["Sexual Display"] = (sexual_display.to_f * 100) if sexual_display.to_f >= 0.05
+    @categories["Erotica"] = (erotica.to_f * 100) if erotica.to_f >= 0.05
+    @categories["Drugs"] = (drugs.to_f * 100) if drugs.to_f >= 0.05
+    @categories["Gore"] = (gore.to_f * 100) if gore.to_f >= 0.0
 
     @danger = []
     @caution = []
