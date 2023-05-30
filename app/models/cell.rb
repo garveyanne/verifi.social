@@ -26,6 +26,7 @@ class Cell < ApplicationRecord
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get_response(uri)
     output = JSON.parse(response.body)
+    return if output["status"] == "failure"
     self.sexual_activity = output["nudity"]["sexual_activity"]
     self.sexual_display = output["nudity"]["sexual_display"]
     self.erotica = output["nudity"]["erotica"]
