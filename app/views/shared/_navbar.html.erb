@@ -7,7 +7,7 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <div class="nav-item dropdown">
-            <i class="fa-solid fa-bell fs-2" data-bs-toggle="dropdown" aria-expanded="false" ></i>
+            <i class="fa-solid fa-bell fs-3" data-bs-toggle="dropdown" aria-expanded="false" ></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-text">
               <%= current_user.notifications.where(unread: true).count %>
               <span class="visually-hidden">unread messages</span>
