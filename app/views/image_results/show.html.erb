@@ -1,20 +1,18 @@
 <div class="container" data-controller="pixelate-image">
   <div class="row justify-content-center">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-      <%= link_to image_results_path, class: "back-button" do %>
-        <i class="fa-solid fa-arrow-left mt-2"></i> My Results
-      <% end %>
-      <h3 class="mt-1 mg-2">Details</h3>
+      <h3 class="mt-3 mb-3">Details</h3>
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
+
             <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
-              <%= cl_image_tag @result.photo.key %>
+                <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
             </div>
             <div class="m-3">
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit value="Break down image"%>
+                  <%= f.submit class: "button mt-3" value="Break down image"%>
                 <% end %>
               <% else %>
                 <p>See image breakdown below</p>
@@ -28,17 +26,18 @@
                 <input type="submit" value="Click to Re-verifi">
               </form>
             </div>
+
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-warning" if cell.danger? }") %>
+                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
                 <% end %>
               </div>
             </div>
           </div>
           <div Class=" mt-3 mb-2">
             <% if @result.profanity_type %>
-              <h2>Text related risks: </h2>
+              <h3>Text related risks on the image: </h3>
               <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
             <% end %>
             <% if @result.profanity_type && @result.profanity_match %>
@@ -58,20 +57,47 @@
               <p><strong>Low risk for removal</strong></p>
             <% else %>
               <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
-              <p>High: <%= @danger.join(", ") %></p>
-              <p>Caution: <%= @caution.join(", ")  %></p>
-              <p>Safe: <%= @safe.join(", ")  %></p>
+              <% if !@danger.empty? %>
+                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %>▼</p>
+                <div class="collapse border border-1 p-3" id="dangercollapse" >
+                  <% @danger.each do |cat| %>
+                    <p><em><%= cat %></em></p>
+                    <p><%= @descriptions[cat] %></p>
+                  <% end %>
+                </div>
+              <% end %>
+              <% if !@caution.empty? %>
+                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %>▼</p>
+                <div class="collapse border border-1 p-3" id="cautioncollapse" >
+                  <% @caution.each do |cat| %>
+                    <p><em><%= cat %></em></p>
+                    <p><%= @descriptions[cat] %></p>
+                  <% end %>
+                </div>
+              <% end %>
+              <% if !@safe.empty? %>
+                <p>Safe:
+                  <% @safe.each_with_index do |cat, index|%>
+                    <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %>▼</span>
+                  <% end %>
+                </p>
+                <% @safe.each_with_index do |cat, index| %>
+                  <div class="collapse  border border-1 p-3"" id="safecollapse<%=index%>" >
+                    <p><em><%= cat %></em></p>
+                    <p><%= @descriptions[cat] %></p>
+                  </div>
+                <% end %>
+              <% end %>
             <% end %>
             <div class="w-75 mb-3">
               <%= bar_chart(@categories) %>
             </div>
           <% end %>
           <div class="mb-5">
-            <%= link_to "Tips", tips_path, class:"button mb-5" %>
-            <%= link_to "Community", posts_path, class:"button mb-5" %>
-            <%= link_to "Verifi again", new_image_result_path, class:"button mb-5" %>
             <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-              <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
+              <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+                <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -79,92 +105,3 @@
     </div>
   </div>
 </div>
-<%# const categories = [
-    { label: "sexual activity", value: sexualActivityResult },
-    { label: "Sexual Display", value: sexualDisplayResult },
-    { label: "Erotic", value: eroticResult },
-    { label: "Suggestive", value: suggestiveResult },
-    { label: "Drugs", value: drugsResult },
-    { label: "Gore", value: goreResult }
-  ]; %>
-<%# <div class="w-75">
-  <canvas id="myChart" class="chart-canvas"></canvas>
-</div> %>
-<%#
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-  const sexualActivity = document.getElementById('sexual-activity');
-  const sexualActivityResult = parseInt(sexualActivity.innerText.split(': ')[1])
-  const sexualDisplay = document.getElementById('sexual-display');
-  const sexualDisplayResult = parseInt(sexualDisplay.innerText.split(': ')[1])
-  const erotic = document.getElementById('erotic');
-  const eroticResult = parseInt(erotic.innerText.split(': ')[1])
-  const suggestive = document.getElementById('suggestive');
-  const suggestiveResult = parseInt(suggestive.innerText.split(': ')[1])
-  const drugs = document.getElementById('drugs');
-  const drugsResult = parseInt(drugs.innerText.split(': ')[1])
-  const gore = document.getElementById('gore');
-  const goreResult = parseInt(gore.innerText.split(': ')[1])
-
-  const categories = [
-    { label: "sexual activity", value: sexualActivityResult },
-    { label: "Sexual Display", value: sexualDisplayResult },
-    { label: "Erotic", value: eroticResult },
-    { label: "Suggestive", value: suggestiveResult },
-    { label: "Drugs", value: drugsResult },
-    { label: "Gore", value: goreResult }
-  ];
-
-  // Sort the categories array in ascending order based on the value
-  categories.sort(function(a, b) {
-    return b.value - a.value;
-  });
-
-  const chartLabels = categories.map(function(item) {
-    return item.label;
-  });
-  const chartData = categories.map(function(item) {
-    return item.value;
-  });
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: chartLabels,
-      datasets: [{
-        label: 'percentage',
-        data: chartData,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
-        ],
-
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      scales: {
-        x: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-</script> %>

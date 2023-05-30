@@ -9,34 +9,45 @@ class ImageResultsController < ApplicationController
   end
 
   def show
+
     @image_result = ImageResult.new
+
+    @descriptions = {
+      "Sexual Activity" => "Sexual intercourse with clear nudity, including genital-genital and oral-genital activity
+      Clear masturbation\n Direct touching of genitals
+      Sex toys involved in sexual activity: penetrating mouth, anus or genitals. Includes dildos, sex dolls, fleshlights, plugs.
+      Semen or vaginal fluids on faces or body parts",
+      "Sexual Display" => "Exposure of genitals/sexual organs\n Exposed genitalia (transgender included), vulva, anus, male penises, both erect and non-erect, or testicles, either directly visible or through transparent, see-through or sheer clothing\n Sex toys not in use: dildos, sex dolls, fleshlights, butt plugs & beads",
+      "Erotica" => "Exposure of breasts, nude buttocks or the pubic region\n Nude female breasts, female breasts with visible nipples or areola\n Nude buttocks, both male and female, in a non-sexual setting\n Pubic region, pubic hair, female crotch region or area around genitals with no genitals visible",
+      "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
+      "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
+    }
+
+
     @result = ImageResult.find(params[:id])
     @cell = Cell.new
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
       "Erotica" => nil,
-      "Suggestive" => nil,
       "Drugs" => nil,
       "Gore" => nil
     }
-    @categories["Sexual Activity"] = (@result.sexual_activity * 100) if @result.sexual_activity >= 0.05
-    @categories["Sexual Display"] = (@result.sexual_display * 100) if @result.sexual_display >= 0.05
-    @categories["Erotica"] = (@result.erotica * 100) if @result.erotica >= 0.05
-    @categories["Suggestive"] = (@result.suggestive * 100) if @result.suggestive >= 0.05
-    @categories["Drugs"] = (@result.drugs * 100) if @result.drugs >= 0.05
-    @categories["Gore"] = (@result.gore * 100) if @result.gore >= 0.05
+    @categories["Sexual Activity"] = (@result.sexual_activity.to_f * 100) if @result.sexual_activity.to_f >= 0.05
+    @categories["Sexual Display"] = (@result.sexual_display.to_f * 100) if @result.sexual_display.to_f >= 0.05
+    @categories["Erotica"] = (@result.erotica.to_f * 100) if @result.erotica.to_f >= 0.05
+    @categories["Drugs"] = (@result.drugs.to_f * 100) if @result.drugs.to_f >= 0.05
+    @categories["Gore"] = (@result.gore.to_f * 100) if @result.gore.to_f >= 0.05
 
     colorarray = []
     @categories.each do |name, value|
-      if value.to_i > 40
+      if value.to_i > 60
         colorarray << "#ff6384cc"
-      elsif value.to_i > 20
+      elsif value.to_i > 30
         colorarray << "#ffcc66cc"
       else
         colorarray << "#00cc99cc"
       end
-
     end
 
     Chartkick.options = {
@@ -48,9 +59,9 @@ class ImageResultsController < ApplicationController
     @caution = []
     @safe = []
     @categories.each do |name, value|
-      if value.to_i > 40
+      if value.to_i > 60
         @danger << name
-      elsif value.to_i > 20
+      elsif value.to_i > 30
         @caution << name
       else
         @safe << name
@@ -108,7 +119,6 @@ class ImageResultsController < ApplicationController
     result.sexual_activity = output["nudity"]["sexual_activity"]
     result.sexual_display = output["nudity"]["sexual_display"]
     result.erotica = output["nudity"]["erotica"]
-    result.suggestive = output["nudity"]["suggestive"]
     result.drugs = output["drugs"]
     result.gore = output["gore"]["prob"]
     if output["text"]["profanity"][0]
