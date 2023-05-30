@@ -4,7 +4,7 @@ class Cell < ApplicationRecord
   belongs_to :image_result
   has_one_attached :photo
   validates_uniqueness_of :image_result, scope: [:col, :row]
-  after_create :verifi
+  before_create :verifi
 
   def danger?
     @danger = false
@@ -36,6 +36,6 @@ class Cell < ApplicationRecord
       self.profanity_match = output["text"]["profanity"][0]["match"]
       self.profanity_intensity = output["text"]["profanity"][0]["intensity"]
     end
-    self.save
+    # self.save
   end
 end
