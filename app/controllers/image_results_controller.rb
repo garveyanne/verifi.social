@@ -20,6 +20,7 @@ class ImageResultsController < ApplicationController
       "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
       "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
     }
+
     @result = ImageResult.find(params[:id])
     @cell = Cell.new
     @categories = {
@@ -111,10 +112,15 @@ class ImageResultsController < ApplicationController
     }
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get_response(uri)
-    output = JSON.parse(response.body)
-    result.sexual_activity = output["nudity"]["sexual_activity"]
-    result.sexual_display = output["nudity"]["sexual_display"]
-    result.erotica = output["nudity"]["erotica"]
+    puts
+    p output = JSON.parse(response.body)
+    puts
+    return if output["status"] == "failure"
+    if output["nudity"]
+      result.sexual_activity = output["nudity"]["sexual_activity"]
+      result.sexual_display = output["nudity"]["sexual_display"]
+      result.erotica = output["nudity"]["erotica"]
+    end
     result.drugs = output["drugs"]
     result.gore = output["gore"]["prob"]
     if output["text"]["profanity"][0]
