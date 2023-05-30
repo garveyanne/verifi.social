@@ -40,14 +40,13 @@ class ImageResultsController < ApplicationController
 
     colorarray = []
     @categories.each do |name, value|
-      if value.to_i > 40
+      if value.to_i > 60
         colorarray << "#ff6384cc"
-      elsif value.to_i > 20
+      elsif value.to_i > 30
         colorarray << "#ffcc66cc"
       else
         colorarray << "#00cc99cc"
       end
-
     end
 
     Chartkick.options = {
@@ -55,11 +54,18 @@ class ImageResultsController < ApplicationController
       colors: colorarray,
       max: 100
     }
-
-    @danger = @result.risk_category[:danger]
-    @caution = @result.risk_category[:caution]
-    @safe = @result.risk_category[:safe]
-
+    @danger = []
+    @caution = []
+    @safe = []
+    @categories.each do |name, value|
+      if value.to_i > 60
+        @danger << name
+      elsif value.to_i > 30
+        @caution << name
+      else
+        @safe << name
+      end
+    end
     authorize @result
     @grid_size = 5
   end
