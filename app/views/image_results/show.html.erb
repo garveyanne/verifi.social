@@ -56,7 +56,7 @@
                     <p><%= @descriptions[cat] %></p>
                   <% end %>
                 </div>
-                <% end %>
+              <% end %>
               <% if !@caution.empty? %>
                 <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %></p>
                 <div class="collapse" id="cautioncollapse" >
@@ -65,7 +65,7 @@
                     <p><%= @descriptions[cat] %></p>
                   <% end %>
                 </div>
-                <% end %>
+              <% end %>
               <% if !@safe.empty? %>
                 <p>Safe:
                   <% @safe.each_with_index do |cat, index|%>
