@@ -31,6 +31,9 @@ class ImageResult < ApplicationRecord
       end
     end
 
+    if profanity_type
+      @danger << "profanity"
+    end
     return { danger: @danger, caution: @caution, safe: @safe}
   end
 end
