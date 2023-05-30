@@ -9,7 +9,7 @@
         <div>
           <div class="w-100 overflow-hidden">
             <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
-              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill %>
+              <%= cl_image_tag @result.photo.key %>
             </div>
             <div class="m-3">
               <% if @result.cells.empty? %>

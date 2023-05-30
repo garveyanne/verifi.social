@@ -10,7 +10,6 @@ export default class extends Controller {
   start(){
     on=!on
   }
-
   coordinates(e){
     if (on) {
       const imgsrc = this.imageTarget.children[0].src

@@ -61,7 +61,7 @@ class ImageResultsController < ApplicationController
     if params[:x] && params[:y]
       respond_to do |format|
         format.html # Follow regular flow of Rails
-        format.text { render partial: "image", locals: {x: params[:x].to_i, y: params[:y].to_i, src: @result.photo.url}, formats: [:html] }
+        format.text { render partial: "image", locals: {x: params[:x], y: params[:y], src: @result.photo.key}, formats: [:html] }
       end
     end
   end
