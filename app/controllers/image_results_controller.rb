@@ -57,6 +57,13 @@ class ImageResultsController < ApplicationController
     end
     authorize @result
     @grid_size = 5
+
+    if params[:x] && params[:y]
+      respond_to do |format|
+        format.html # Follow regular flow of Rails
+        format.text { render partial: "image", locals: {x: params[:x].to_i, y: params[:y].to_i, src: @result.photo.url}, formats: [:html] }
+      end
+    end
   end
 
   def new

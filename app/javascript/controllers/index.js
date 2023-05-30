@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import LoadingController from "./loading_controller"
 application.register("loading", LoadingController)
+
+import PixelateImageController from "./pixelate_image_controller"
+application.register("pixelate-image", PixelateImageController)
