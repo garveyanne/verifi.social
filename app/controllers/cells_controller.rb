@@ -15,7 +15,6 @@ class CellsController < ApplicationController
   def create
     @result = ImageResult.find(params[:image_result_id])
     image_into_grid(@result)
-    VerifiCellsJob.perform_now(@result)
     redirect_to image_results_path(@result)
   end
 

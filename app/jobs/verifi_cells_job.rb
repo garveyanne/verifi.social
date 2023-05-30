@@ -5,7 +5,7 @@ class VerifiCellsJob < ApplicationJob
     # Do something later
     verifi(result)
   end
-
+# Not using this currently #
   def verifi(result)
     result.cells.each do |cell|
       ######
