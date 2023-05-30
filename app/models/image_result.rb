@@ -3,7 +3,7 @@ class ImageResult < ApplicationRecord
   has_one_attached :photo
   has_many :cells, dependent: :destroy
 
-  def risk_category
+def risk_category
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
