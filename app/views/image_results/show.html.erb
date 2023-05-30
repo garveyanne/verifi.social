@@ -1,16 +1,32 @@
-<div class="container">
+<div class="container" data-controller="pixelate-image">
   <div class="row justify-content-center">
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <h3 class="mt-3 mb-3">Details</h3>
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
-            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
-            <% if @result.cells.empty? %>
-              <%= simple_form_for [@result, @cell] do |f| %>
-                <%= f.submit class: "button mt-3" %>
+
+            <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
+                <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
+            </div>
+            <div class="m-3">
+              <% if @result.cells.empty? %>
+                <%= simple_form_for [@result, @cell] do |f| %>
+                  <%= f.submit class: "button mt-3" value="Break down image"%>
+                <% end %>
+              <% else %>
+                <p>See image breakdown below</p>
               <% end %>
-            <% end %>
+            </div>
+            <div class="">
+              <button data-action="click->pixelate-image#start">Click to start blurring</button>
+              <form action="/image_results" method="POST">
+                <input type="text" data-pixelate-image-target="input" hidden name="url_image">
+                <% form_authenticity_token %>
+                <input type="submit" value="Click to Re-verifi">
+              </form>
+            </div>
+
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>

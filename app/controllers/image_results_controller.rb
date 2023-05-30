@@ -9,6 +9,9 @@ class ImageResultsController < ApplicationController
   end
 
   def show
+
+    @image_result = ImageResult.new
+
     @descriptions = {
       "Sexual Activity" => "Sexual intercourse with clear nudity, including genital-genital and oral-genital activity
       Clear masturbation\n Direct touching of genitals
@@ -19,6 +22,7 @@ class ImageResultsController < ApplicationController
       "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
       "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
     }
+
 
     @result = ImageResult.find(params[:id])
     @cell = Cell.new
@@ -65,6 +69,13 @@ class ImageResultsController < ApplicationController
     end
     authorize @result
     @grid_size = 5
+
+    if params[:x] && params[:y]
+      respond_to do |format|
+        format.html # Follow regular flow of Rails
+        format.text { render partial: "image", locals: {x: params[:x], y: params[:y], src: @result.photo.key}, formats: [:html] }
+      end
+    end
   end
 
   def new
@@ -73,7 +84,13 @@ class ImageResultsController < ApplicationController
   end
 
   def create
-    @result = ImageResult.new(result_params)
+    if params[:url_image]
+      @result = ImageResult.new
+      file = URI.open(params[:url_image])
+      @result.photo.attach(io: file, filename: "photo.png")
+    else
+      @result = ImageResult.new(result_params)
+    end
     @result.user = current_user
     authorize @result
     if @result.save
