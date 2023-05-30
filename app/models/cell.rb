@@ -3,8 +3,8 @@ require "open-uri"
 class Cell < ApplicationRecord
   belongs_to :image_result
   has_one_attached :photo
-  validates_uniqueness_of :image_results, scope: [:col, :row]
-after_create :verifi
+  validates_uniqueness_of :image_result, scope: [:col, :row]
+  after_create :verifi
 
   def danger?
     @danger = false
