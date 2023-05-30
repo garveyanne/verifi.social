@@ -16,7 +16,7 @@ class CellsController < ApplicationController
     @result = ImageResult.find(params[:image_result_id])
     image_into_grid(@result)
     # verifi(result)
-    redirect_to image_results_path(@result)
+    redirect_to image_result_path(@result)
   end
 
   def image_into_grid(result)

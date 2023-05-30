@@ -5,34 +5,32 @@
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
-
             <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
-                <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
+              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
             </div>
             <div class="m-3">
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit class: "button mt-3" value="Break down image"%>
+                  <%= f.submit "Break down image", class: "button mt-3" %>
                 <% end %>
               <% else %>
                 <p>See image breakdown below</p>
               <% end %>
             </div>
-            <div class="">
-              <button data-action="click->pixelate-image#start">Click to start blurring</button>
-              <form action="/image_results" method="POST">
-                <input type="text" data-pixelate-image-target="input" hidden name="url_image">
-                <% form_authenticity_token %>
-                <input type="submit" value="Click to Re-verifi">
-              </form>
-            </div>
-
             <div>
               <div class="grid-container w-100">
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
                   <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
                 <% end %>
               </div>
+            </div>
+            <div class="">
+              <button class="button mt-3" data-action="click->pixelate-image#start">Click to start blurring</button>
+              <form action="/image_results" method="POST">
+                <input type="text" data-pixelate-image-target="input" hidden name="url_image">
+                <% form_authenticity_token %>
+                <input type="submit" class="button mt-3" value="Click to Re-verifi">
+              </form>
             </div>
           </div>
           <div Class=" mt-3 mb-2">
