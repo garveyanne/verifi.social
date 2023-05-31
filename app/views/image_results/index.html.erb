@@ -3,20 +3,24 @@
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <h3 class="mb-3 mt-3">My Results</h3>
       <div class="card-grid mb-5">
+        <%# list all results in order from newest to oldest %>
         <% @results.order(created_at: :desc).each do |result| %>
+          <%# image results cards %>
           <div class="post-card-result">
             <%= link_to image_result_path(result), class:"no-text-decoration" do %>
               <%= cl_image_tag result.photo.key, class: "w-100 post-img" %>
               <div class="p-2">
                 <p class="mt-1 mb-0"> Created on <br>
                   <%= result.created_at.strftime("%m-%d-%Y") %></p>
-                <% if result.risk_category[:danger].empty? && result.risk_category[:caution].empty? %>
+                <%# test to see if photo is listed as at risk %>
+                <% if result.risk_category[:danger].empty? %>
                   <p> No risk </p>
                 <% else %>
                   <p> At risk </p>
                 <% end %>
               </div>
             <% end %>
+            <%# delete button %>
             <%= link_to image_result_path(result), data: { turbo_method: :delete, turbo_confirm: "Delete post?" } do %>
               <i class="fa-solid fa-xmark xmark"></i>
             <% end %>
