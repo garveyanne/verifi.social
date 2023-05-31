@@ -60,7 +60,7 @@
               <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
               <% if !@danger.empty? %>
                 <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
-                <div class="collapse border border-1 p-3" id="dangercollapse" >
+                <div class="collapse border border-1 rounded p-3 mb-3" id="dangercollapse" >
                   <% @danger.each do |cat| %>
                     <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
@@ -69,7 +69,7 @@
               <% end %>
               <% if !@caution.empty? %>
                 <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
-                <div class="collapse border border-1 p-3" id="cautioncollapse" >
+                <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
                   <% @caution.each do |cat| %>
                     <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
@@ -83,7 +83,7 @@
                   <% end %>
                 </p>
                 <% @safe.each_with_index do |cat, index| %>
-                  <div class="collapse  border border-1 p-3"" id="safecollapse<%=index%>" >
+                  <div class="collapse  border border-1 rounded p-3 mb-3" id="safecollapse<%=index%>" >
                     <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
                   </div>
