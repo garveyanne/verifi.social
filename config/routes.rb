@@ -14,5 +14,4 @@ Rails.application.routes.draw do
   end
 
   get '/tagged', to: "posts#tagged", as: :tagged
-  get '/tips', to: "pages#tips", as: :tips
 end
