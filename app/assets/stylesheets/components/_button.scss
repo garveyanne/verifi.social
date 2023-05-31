@@ -24,6 +24,28 @@
   color: white;
 }
 
+.home-button {
+  color: white;
+  height: auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 16px;
+  padding: 10px 24px;
+  font-size: 20px;
+  background-color: #927AC1;
+  transition-duration: 0.2s;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+
+.home-button:hover {
+  background-color: #e6e289;
+  color: white;
+}
+
 .button-category {
   transition-duration: 0.2s;
     background-color: #927AC1;
