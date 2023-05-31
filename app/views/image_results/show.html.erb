@@ -9,6 +9,7 @@
               <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
             </div>
             <div class="m-3">
+            <%# cell button %>
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
                   <%= f.submit "Break down image", class: "button mt-3" %>
