@@ -13,5 +13,6 @@ application.register("loading", LoadingController)
 import PixelateImageController from "./pixelate_image_controller"
 application.register("pixelate-image", PixelateImageController)
 
-import BlurrController from "./blurr_controller"
-application.register("blurr", BlurrController)
+import TypedController from "./typed_controller"
+application.register("typed", TypedController)
+
