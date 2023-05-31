@@ -5,11 +5,13 @@
       <div class="row">
         <div>
           <div class="w-100 overflow-hidden">
+            <%# the image %>
             <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
               <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
             </div>
             <div class="m-3">
-            <%# cell button %>
+              <%# cell button %>
+              <%# if they have not created cells, will display a button %>
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
                   <%= f.submit "Break down image", class: "button mt-3" %>
@@ -20,12 +22,14 @@
             </div>
             <div>
               <div class="grid-container w-100">
+                <%# cell results built into an image %>
                 <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
                   <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
                 <% end %>
               </div>
             </div>
             <div class="">
+              <%# 2 buttons to start blur action and re-verifi %>
               <button class="button mt-3" data-action="click->pixelate-image#start">Click to start blurring</button>
               <form action="/image_results" method="POST">
                 <input type="text" data-pixelate-image-target="input" hidden name="url_image">
@@ -35,19 +39,14 @@
             </div>
           </div>
           <div Class=" mt-3 mb-2">
+            <%# text risks section %>
             <% if @result.profanity_type %>
-              <h3>Text related risks on the image: </h3>
-              <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
-            <% end %>
-            <% if @result.profanity_type && @result.profanity_match %>
-              <p>Profanity Used: <%= @result.profanity_match.html_safe %></p>
-            <% end %>
-            <% if @result.profanity_type && @result.profanity_match && @result.profanity_intensity %>
-              <p>Profanity Intensity: <%= @result.profanity_intensity.html_safe %></p>
+              <h3><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h3>
             <% end %>
           </div>
         </div>
         <div class="mb-2">
+          <%# image risks section %>
           <% if @categories.values.all?(nil) %>
             <h3 class="mt-3">No imagery related risks</h3>
           <% else %>
@@ -88,11 +87,13 @@
                 <% end %>
               <% end %>
             <% end %>
+            <%# bar chart display %>
             <div class="w-75 mb-3">
               <%= bar_chart(@categories) %>
             </div>
           <% end %>
           <div class="mb-5">
+            <%# post to instagram button if all values are nil %>
             <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
               <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
                 <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
