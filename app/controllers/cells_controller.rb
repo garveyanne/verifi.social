@@ -22,8 +22,8 @@ class CellsController < ApplicationController
     # will break photo into 25 smaller photo grid (5x5)
     grid_size = 5
     # determines size of each grid square
-    cell_width = result.width / grid_size
-    cell_height = result.height / grid_size
+    cell_width = result.width.fdiv(grid_size)
+    cell_height = result.height.fdiv(grid_size)
     # itterate over the image grid cells
     # set the x and y axis points (top left corner of the cell)
     (0...grid_size).each do |row|
