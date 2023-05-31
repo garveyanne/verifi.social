@@ -5,7 +5,7 @@
         <div>
           <div class="w-100 overflow-hidden">
             <%# the image %>
-            <div class="image-container" data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
+            <div class="image-container mt-3"  data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
               <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?) %>
               <%# if they have not created cells, will display a button %>
               <% if @result.cells.empty? %>
