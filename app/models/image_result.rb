@@ -4,33 +4,22 @@ class ImageResult < ApplicationRecord
   has_many :cells, dependent: :destroy
 
   def risk_category
+    # method to display on the index page if something is at risk or not
+    # declare cats
     @categories = {
-      "Sexual Activity" => nil,
-      "Sexual Display" => nil,
-      "Erotica" => nil,
-      "Drugs" => nil,
-      "Gore" => nil
+      "Sexual Activity" => sexual_activity.to_f,
+      "Sexual Display" => sexual_display.to_f,
+      "Erotica" => erotica.to_f,
+      "Drugs" => drugs.to_f,
+      "Gore" => gore.to_f
     }
-
-    @categories["Sexual Activity"] = (sexual_activity.to_f * 100) if sexual_activity.to_f >= 0.05
-    @categories["Sexual Display"] = (sexual_display.to_f * 100) if sexual_display.to_f >= 0.05
-    @categories["Erotica"] = (erotica.to_f * 100) if erotica.to_f >= 0.05
-    @categories["Drugs"] = (drugs.to_f * 100) if drugs.to_f >= 0.05
-    @categories["Gore"] = (gore.to_f * 100) if gore.to_f >= 0.0
-
+    # assign empty array to hold danger items
     @danger = []
-    @caution = []
-    @safe = []
+    # test if the items as at risk
     @categories.each do |name, value|
-      if value.to_i > 40
-        @danger << name
-      elsif value.to_i > 20
-        @caution << name
-      else
-        @safe << name
-      end
+      @danger << name if value > 0.6
     end
-
+    # test if profanity exists
     if profanity_type
       @danger << "profanity"
     end

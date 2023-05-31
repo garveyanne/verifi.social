@@ -2,7 +2,6 @@ require 'open-uri'
 
 class CellsController < ApplicationController
   before_action :verify_authenticity_token, only: [:create]
-
   def index
     @cells = policy_scope(Cell)
   end
@@ -13,32 +12,34 @@ class CellsController < ApplicationController
   end
 
   def create
+    # find the current result that will be broken down into cells
     @result = ImageResult.find(params[:image_result_id])
     image_into_grid(@result)
-    # verifi(result)
     redirect_to image_result_path(@result)
   end
 
   def image_into_grid(result)
-    # cloudinary_url = result.photo.url
-    # image = ChunkyPNG::Image.from_blob(URI.open(cloudinary_url).read)
-    # will break photo into 36 smaller photo grid (6x6)
+    # will break photo into 25 smaller photo grid (5x5)
     grid_size = 5
     # determines size of each grid square
-    cell_width = result.width / grid_size
-    cell_height = result.height / grid_size
+    cell_width = result.width.fdiv(grid_size)
+    cell_height = result.height.fdiv(grid_size)
     # itterate over the image grid cells
     # set the x and y axis points (top left corner of the cell)
     (0...grid_size).each do |row|
       (0...grid_size).each do |col|
         x = col * cell_width
         y = row * cell_height
+        # build the URL to request a cropped portion of that image
         url = "https://res.cloudinary.com/#{ENV['CLOUDINARY_NAME']}/image/upload/c_crop,h_#{cell_height},w_#{cell_width},x_#{x},y_#{y}/v1/#{Rails.env}/#{result.photo.key}"
+        # verifi(result) is done before creation on the model
+        # create sells with all info needed
         authorize Cell.create(x_coor: x, y_coor: y, photo_url: url, image_result: result, row: row, col: col)
       end
     end
   end
 
+  ##### MOVED TO MODEL TO BE DONE BEFORE CREATE #####
   # def verifi(result)
   #   result.cells.each do |cell|
   #     ######
