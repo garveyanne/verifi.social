@@ -1,0 +1,18 @@
+.test {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  display: none;
+  font-size: 30px;
+  font-family:"DM Serif Display";
+  color:rgb(30, 30, 30);
+}
+
+.container:has(.cell) .test {
+  display: none;
+}

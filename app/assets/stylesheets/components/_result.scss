@@ -2,7 +2,7 @@
 .card-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px
+  gap: 14px
 }
 
 .post-card-result {
@@ -19,7 +19,7 @@
   }
 
 .post-img {
-  height: 180px;
+  height: 210px;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -43,9 +43,18 @@
 }
 
 .no-risk {
-  background-color: #94f0a5;
+  background-color: #7ED4B0;
 }
 
 .at-risk {
-  background-color: #FEBD9D;
+  background-color: #F8D891;
+}
+
+.at-high-risk {
+  background-color: #EC869A;
+}
+
+.fa-circle-question {
+  font-size: 14px;
+  color: white;
 }

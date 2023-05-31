@@ -22,8 +22,8 @@ class CellsController < ApplicationController
     # will break photo into 25 smaller photo grid (5x5)
     grid_size = 5
     # determines size of each grid square
-    cell_width = result.width.fdiv(grid_size)
-    cell_height = result.height.fdiv(grid_size)
+    cell_width = result.width / grid_size
+    cell_height = result.height / grid_size
     # itterate over the image grid cells
     # set the x and y axis points (top left corner of the cell)
     (0...grid_size).each do |row|
@@ -33,7 +33,7 @@ class CellsController < ApplicationController
         # build the URL to request a cropped portion of that image
         url = "https://res.cloudinary.com/#{ENV['CLOUDINARY_NAME']}/image/upload/c_crop,h_#{cell_height},w_#{cell_width},x_#{x},y_#{y}/v1/#{Rails.env}/#{result.photo.key}"
         # verifi(result) is done before creation on the model
-        # create sells with all info needed
+        # create cells with all info needed
         authorize Cell.create(x_coor: x, y_coor: y, photo_url: url, image_result: result, row: row, col: col)
       end
     end
