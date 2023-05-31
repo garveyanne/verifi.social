@@ -9,6 +9,7 @@
     "chart.js": "^4.2.1",
     "chartkick": "^5.0.1",
     "stimulus-chartjs": "^5.0.0",
+    "typed.js": "^2.0.16",
     "webpack": "^5.83.1",
     "webpack-cli": "^5.1.1"
   },
