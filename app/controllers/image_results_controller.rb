@@ -105,14 +105,19 @@ class ImageResultsController < ApplicationController
       verifi(@result) if @result.photo.attached?
       # save the file size to be used to make a grid
       size = FastImage.size(@result.photo.url)
-      @result.width = size[0]
-      @result.height = size[1]
+      @result.width = round_down_to_multiple_of_5(size[0])
+      @result.height = round_down_to_multiple_of_5(size[1])
       @result.save
       redirect_to image_result_path(@result)
     else
       render :new, status: :uprocessable_entity
     end
   end
+
+  def round_down_to_multiple_of_5(number)
+    (number / 5).floor * 5
+  end
+
 
   def verifi(result)
     #call the API for info
