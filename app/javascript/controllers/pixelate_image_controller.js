@@ -3,7 +3,7 @@ let on=false
 
 // Connects to data-controller="pixelate-image"
 export default class extends Controller {
-  static targets = [ "image", "input"]
+  static targets = [ "image", "input", "blurrButton", "reVerifiButton" ]
   connect() { console.log("ready to pixelate")
     console.log(this.imageTarget.children[0].src);
   }
@@ -23,6 +23,10 @@ export default class extends Controller {
       .then ((data) => {
         this.imageTarget.innerHTML = data
         this.inputTarget.value = this.imageTarget.children[0].src
+        console.log('is blurr working')
+
+        this.blurrButtonTarget.style.display="none"
+        this.reVerifiButtonTarget.classList.remove("visually-hidden")
       })
 
       // this.imageTarget.children[0].src = `https://res.cloudinary.com/demo/image/fetch/c_fill,e_pixelate_region,h_50,w_50,x_${x_touch},y_${y_touch}/${imgsrc}`

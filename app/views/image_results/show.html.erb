@@ -4,95 +4,99 @@
       <h3 class="mt-3 mb-2"></h3>
       <div class="row">
         <div class="w-100 overflow-hidden">
-          <% if @categories.values.all?(nil) %>
-            <%# <h3 class="mt-3">No imagery related risks</h3> %>
+          <% if @danger.empty? && @caution.empty? %>
+            <h3><strong>Low risk for removal</strong></h3>
           <% else %>
-            <%# <h3 class="mt-3">Imagery related risks</h3> %>
-            <% if @danger.empty? && @caution.empty? %>
-              <h3><strong>Low risk for removal</strong></h3>
-            <% else %>
-              <h3><strong>High risk for removal </h3>
-                <h2><%= @danger.join(", ") %> </strong></h2>
-              <% if !@danger.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %>▼</p>
-                <div class="collapse border border-1 p-3" id="dangercollapse" >
-                  <% @danger.each do |cat| %>
-                    <p><em><%= cat %></em></p>
-                    <p><%= @descriptions[cat] %></p>
-                  <% end %>
-                </div>
-              <% end %>
-              <% if !@caution.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %>▼</p>
-                <div class="collapse border border-1 p-3" id="cautioncollapse" >
-                  <% @caution.each do |cat| %>
-                    <p><em><%= cat %></em></p>
-                    <p><%= @descriptions[cat] %></p>
-                  <% end %>
-                </div>
+            <h3><strong>High risk for removal </h3>
+              <h2><%= @danger.join(", ") %> </strong></h2>
+            <% if !@danger.empty? %>
+              <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <%= @danger.join(", ") %>▼</p>
+              <div class="collapse border border-1 p-3" id="dangercollapse" >
+                <% @danger.each do |cat| %>
+                  <p><em><%= cat %></em></p>
+                  <p><%= @descriptions[cat] %></p>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+          <% if !@caution.empty? %>
+            <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <%= @caution.join(", ")  %>▼</p>
+            <div class="collapse border border-1 p-3" id="cautioncollapse" >
+              <% @caution.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
-            <div Class=" mt-3 mb-2">
-              <% if @result.profanity_type %>
-                <%# <h3>Text related risks on the image: </h3> %>
-                <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
-              <% end %>
-              <% if @result.profanity_type && @result.profanity_match %>
-                <p>Profanity Used: <%= @result.profanity_match.html_safe %></p>
-              <% end %>
-              <% if @result.profanity_type && @result.profanity_match && @result.profanity_intensity %>
-                <p>Profanity Intensity: <%= @result.profanity_intensity.html_safe %></p>
-              <% end %>
-            </div>
-            <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
-              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
-            </div>
+          <% end %>
+        </div>
+        <div Class=" mt-3 mb-2">
+          <% if @result.profanity_type %>
+            <%# <h3>Text related risks on the image: </h3> %>
+            <p>Profanity Type: <%= @result.profanity_type.html_safe %></p>
+          <% end %>
+          <% if @result.profanity_type && @result.profanity_match %>
+            <p>Profanity Used: <%= @result.profanity_match.html_safe %></p>
+          <% end %>
+          <% if @result.profanity_type && @result.profanity_match && @result.profanity_intensity %>
+            <p>Profanity Intensity: <%= @result.profanity_intensity.html_safe %></p>
+          <% end %>
+          <div class="grid-container w-100">
+          </div>
+          <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
+            <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
+          <% end %>
+        </div>
+        <div class="image-container" data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
+          <%= cl_image_tag @result.photo.key,  height: 400, width: 400, crop: :fill, style: ("display: none;" unless @result.cells.empty?) %>
+          <div class="overlay-button">
             <div>
               <% if @result.cells.empty? %>
                 <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit "Break down image", class: "button mt-3" %>
+                  <%= f.button :button, class: "d-flex flex-column" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3" viewBox="0 0 16 16">
+                      <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5V5h4V1H1.5zM5 6H1v4h4V6zm1 4h4V6H6v4zm-1 1H1v3.5a.5.5 0 0 0 .5.5H5v-4zm1 0v4h4v-4H6zm5 0v4h3.5a.5.5 0 0 0 .5-.5V11h-4zm0-1h4V6h-4v4zm0-5h4V1.5a.5.5 0 0 0-.5-.5H11v4zm-1 0V1H6v4h4z"/>
+                    </svg>
+                  <%end%>
                 <% end %>
-              <% else %>
-                <%# <p>See image breakdown below</p> %>
               <% end %>
             </div>
             <div>
-              <div class="grid-container w-100">
-                <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                  <%= image_tag(cell.photo_url, class: "w-100 #{ "border border-3 border-warning" if cell.danger? }") %>
-                <% end %>
-              </div>
             </div>
-            <div>
-              <button class="button mt-3" data-action="click->pixelate-image#start">Click to start blurring</button>
+            <div class="button-unstyled" data-controller="blurr">
+              <a data-pixelate-image-target="blurrButton"  data-action="click->pixelate-image#start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-index" viewBox="0 0 16 16">
+                  <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 1 0 1 0V6.435a4.9 4.9 0 0 1 .106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 0 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.035a.5.5 0 0 1-.416-.223l-1.433-2.15a1.5 1.5 0 0 1-.243-.666l-.345-3.105a.5.5 0 0 1 .399-.546L5 8.11V9a.5.5 0 0 0 1 0V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                </svg></a>
               <form action="/image_results" method="POST">
                 <input type="text" data-pixelate-image-target="input" hidden name="url_image">
                 <% form_authenticity_token %>
-                <input type="submit" class="button mt-3" value="Click to Re-verifi">
+                <input type="submit" data-pixelate-image-target="reVerifiButton" class="visually-hidden mt-3" value="Re-verifi">
               </form>
             </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart">
+              <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+            </svg>
           </div>
-          <div class="safe">
-            <% if !@safe.empty? %>
-              <p>
-                <% @safe.each_with_index do |cat, index|%>
-                  <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %>▼</span>
-                <% end %>
-              </p>
-              <% @safe.each_with_index do |cat, index| %>
-                <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
-                  <p><em><%= cat %></em></p>
-                  <p><%= @descriptions[cat] %></p>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
         </div>
-        <div class="mb-2">
-          <div class="w-75 mb-3">
-            <%= bar_chart(@categories) %>
-          </div>
+      </div>
+      <div class="safe">
+        <% if !@safe.empty? %>
+          <p>
+            <% @safe.each_with_index do |cat, index|%>
+              <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>"><%= cat %>▼</span>
+            <% end %>
+          </p>
+          <% @safe.each_with_index do |cat, index| %>
+            <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
+              <p><em><%= cat %></em></p>
+              <p><%= @descriptions[cat] %></p>
+            </div>
+          <% end %>
         <% end %>
+      </div>
+      <div class="mb-2">
+        <div class="w-75 mb-3">
+          <%= bar_chart(@categories) %>
+        </div>
         <div class="mb-5">
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
             <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
