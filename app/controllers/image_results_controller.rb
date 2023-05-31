@@ -10,6 +10,7 @@ class ImageResultsController < ApplicationController
 
   def show
     @image_result = ImageResult.new
+    # descriptions for the seemore effect
     @descriptions = {
       "Sexual Activity" => "Sexual intercourse with clear nudity, including genital-genital and oral-genital activity
       Clear masturbation\n Direct touching of genitals
@@ -20,9 +21,10 @@ class ImageResultsController < ApplicationController
       "Drugs" => "Recreational drugs such as cannabis, syringes, pills and Self administration of some recreational drugs such as ketamine, cocaine.",
       "Gore" => "Horrific imagery such as blood, guts, self-harm,or wounds"
     }
-
+    # find the result to be displayed
     @result = ImageResult.find(params[:id])
-    @cell = Cell.new
+    #### BAR GRAPH #####
+    # cat assignment for bar graph
     @categories = {
       "Sexual Activity" => nil,
       "Sexual Display" => nil,
@@ -30,14 +32,16 @@ class ImageResultsController < ApplicationController
       "Drugs" => nil,
       "Gore" => nil
     }
+    # add the result stat if it is higher than 0.5. multiple by 100 to make it a nice % for the bar graph
     @categories["Sexual Activity"] = (@result.sexual_activity.to_f * 100) if @result.sexual_activity.to_f >= 0.05
     @categories["Sexual Display"] = (@result.sexual_display.to_f * 100) if @result.sexual_display.to_f >= 0.05
     @categories["Erotica"] = (@result.erotica.to_f * 100) if @result.erotica.to_f >= 0.05
     @categories["Drugs"] = (@result.drugs.to_f * 100) if @result.drugs.to_f >= 0.05
     @categories["Gore"] = (@result.gore.to_f * 100) if @result.gore.to_f >= 0.05
 
+    # set the colors for the bar graph
     colorarray = []
-    @categories.each do |name, value|
+    @categories.each do |_name, value|
       if value.to_i > 60
         colorarray << "#ff6384cc"
       elsif value.to_i > 30
@@ -46,12 +50,13 @@ class ImageResultsController < ApplicationController
         colorarray << "#00cc99cc"
       end
     end
-
     Chartkick.options = {
       # [0] is safe, [1] is warning, [2] is danger
       colors: colorarray,
       max: 100
     }
+
+    # create arrays to hold the names of which cat are danger, caution, or safe
     @danger = []
     @caution = []
     @safe = []
@@ -65,8 +70,11 @@ class ImageResultsController < ApplicationController
       end
     end
     authorize @result
-    @grid_size = 5
 
+    # defined for the create cell button to use
+    @grid_size = 5
+    @cell = Cell.new
+    # reading the results from the grid APIs
     if params[:x] && params[:y]
       respond_to do |format|
         format.html # Follow regular flow of Rails
@@ -81,18 +89,22 @@ class ImageResultsController < ApplicationController
   end
 
   def create
+    # if the image has the blur effect added, will add file manually to form
     if params[:url_image]
       @result = ImageResult.new
       file = URI.open(params[:url_image])
       @result.photo.attach(io: file, filename: "photo.png")
     else
+      # otherwise will just create a form to be added
       @result = ImageResult.new(result_params)
     end
     @result.user = current_user
     authorize @result
+    # saving the result
     if @result.save
       verifi(@result) if @result.photo.attached?
       redirect_to image_result_path(@result)
+      # save the file size to be used to make a grid
       size = FastImage.size(@result.photo.url)
       @result.width = size[0]
       @result.height = size[1]
@@ -103,6 +115,7 @@ class ImageResultsController < ApplicationController
   end
 
   def verifi(result)
+    #call the API for info
     uri = URI('https://api.sightengine.com/1.0/check.json')
     params = {
       'url' => result.photo.url,
@@ -110,12 +123,13 @@ class ImageResultsController < ApplicationController
       'api_user' => ENV['API_USER'],
       'api_secret' => ENV['API_SECRET']
     }
+    # recieve data and save
     uri.query = URI.encode_www_form(params)
     response = Net::HTTP.get_response(uri)
-    puts
-    p output = JSON.parse(response.body)
-    puts
+    output = JSON.parse(response.body)
+    # failure message
     return if output["status"] == "failure"
+    # assign values to result(or cell)
     if output["nudity"]
       result.sexual_activity = output["nudity"]["sexual_activity"]
       result.sexual_display = output["nudity"]["sexual_display"]
