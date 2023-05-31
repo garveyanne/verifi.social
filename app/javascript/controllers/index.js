@@ -13,5 +13,5 @@ application.register("loading", LoadingController)
 import PixelateImageController from "./pixelate_image_controller"
 application.register("pixelate-image", PixelateImageController)
 
-import TypedController from "./typed_controller"
-application.register("typed", TypedController)
+// import TypedController from "./typed_controller"
+// application.register("typed", TypedController)
