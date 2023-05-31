@@ -4,7 +4,8 @@ let on=false
 // Connects to data-controller="pixelate-image"
 export default class extends Controller {
   static targets = [ "image", "input"]
-  connect() { console.log("ready to pixelate")
+  connect() {
+    console.log("ready to pixelate")
     console.log(this.imageTarget.children[0].src);
   }
   start(){

@@ -103,12 +103,12 @@ class ImageResultsController < ApplicationController
     # saving the result
     if @result.save
       verifi(@result) if @result.photo.attached?
-      redirect_to image_result_path(@result)
       # save the file size to be used to make a grid
       size = FastImage.size(@result.photo.url)
       @result.width = size[0]
       @result.height = size[1]
       @result.save
+      redirect_to image_result_path(@result)
     else
       render :new, status: :uprocessable_entity
     end
