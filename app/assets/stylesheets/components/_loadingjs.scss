@@ -8,6 +8,8 @@
   align-items: center;
   background: rgb(255, 255, 255);
   display: none;
+  font-size: 30px;
+  font-family:"DM Serif Display";
 }
 
 .container:has(.cell) .test {
