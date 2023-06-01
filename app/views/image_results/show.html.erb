@@ -44,12 +44,14 @@
             <div class="image-container" data-pixelate-image-target="image">
               <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
             </div>
-            <%# Breakdown image %>
-            <div class="grid-container w-100">
-              <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
-              <% end %>
-            </div>
+            <% if @result.cells.where.not(sexual_activity: nil).count == 25 %>
+              <%# Breakdown image %>
+              <div class="grid-container w-100">
+                <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
+                  <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
+                <% end %>
+              </div>
+            <% end %>
             <%# Icons %>
             <div class="d-flex justify-content-evenly align-items-center mt-2">
               <%# 2 buttons to start blur action and re-verifi %>
@@ -67,79 +69,80 @@
               <%#cell image icon%>
               <div class="text-center">
                 <div class="icon-width">
-                  <%= simple_form_for [@result, @cell] do |f| %>
-                    <%= f.button :button, data:{action:"click->typed#display"} do %>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-grid-3x3 mb-1" viewBox="0 0 16 16">
-                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5V5h4V1H1.5zM5 6H1v4h4V6zm1 4h4V6H6v4zm-1 1H1v3.5a.5.5 0 0 0 .5.5H5v-4zm1 0v4h4v-4H6zm5 0v4h3.5a.5.5 0 0 0 .5-.5V11h-4zm0-1h4V6h-4v4zm0-5h4V1.5a.5.5 0 0 0-.5-.5H11v4zm-1 0V1H6v4h4z"/>
-                      </svg>
-                      <div class="text-center">Scan</div>
-                    <% end %>
+                  <%# <%= simple_form_for [@result, @cell] do |f| %>
+                    <%#= f.button :button, data:{action:"click->typed#display"} do %>
+                      <%= button_to image_result_path(@result), data:{action:"click->typed#display"}, method: :get, class: "bg-white border-0" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-grid-3x3 mb-1" viewBox="0 0 16 16">
+                          <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5V5h4V1H1.5zM5 6H1v4h4V6zm1 4h4V6H6v4zm-1 1H1v3.5a.5.5 0 0 0 .5.5H5v-4zm1 0v4h4v-4H6zm5 0v4h3.5a.5.5 0 0 0 .5-.5V11h-4zm0-1h4V6h-4v4zm0-5h4V1.5a.5.5 0 0 0-.5-.5H11v4zm-1 0V1H6v4h4z"/>
+                        </svg>
+                        <div class="text-center">Scan</div>
+                      <% end %>
+                      <%# end %>
+                    </div>
+                  </div>
+                  <%# Re-verifi icon %>
+                  <div class="text-center flex-column justifi-content-center">
+                    <div class="icon-width">
+                      <form action="/image_results" method="POST" style="margin-right: 20px;">
+                        <input type="text" data-pixelate-image-target="input" hidden name="url_image">
+                        <% form_authenticity_token %>
+                        <button type="submit" style="height: 0px; width: 0px; margin: 0; border: none; padding: 0px;" hidefocus="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-clockwise mb-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                          </svg>
+                        </button>
+                      </form>
+                      <div>Verifi</div>
+                    </div>
+                  </div>
+                  <%# bar chart icon %>
+                  <div class="text-center">
+                    <div class="icon-width">
+                      <a href="#graph" style="color: black">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart mb-1" viewBox="0 0 16 16">
+                          <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                        </svg>
+                      </a>
+                      <div> Results </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%# bar chart display %>
+              <div class="results-card-graph">
+                <div class="w-75 mt-3">
+                  <section id="graph">
+                    <%= bar_chart(@categories) %>
+                  </section>
+                </div>
+              </div>
+              <%# post to instagram button if all values are nil %>
+              <div class="mt-2">
+                <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+                  <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+                    <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
                   <% end %>
-                </div>
-              </div>
-              <%# Re-verifi icon %>
-              <div class="text-center flex-column justifi-content-center">
-                <div class="icon-width">
-                  <form action="/image_results" method="POST" style="margin-right: 20px;">
-                    <input type="text" data-pixelate-image-target="input" hidden name="url_image">
-                    <% form_authenticity_token %>
-                    <button type="submit" style="height: 0px; width: 0px; margin: 0; border: none; padding: 0px;" hidefocus="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-clockwise mb-2" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                      </svg>
-                    </button>
-                  </form>
-                  <div>Verifi</div>
-                </div>
-              </div>
-              <%# bar chart icon %>
-              <div class="text-center">
-                <div class="icon-width">
-                  <a href="#graph" style="color: black">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart mb-1" viewBox="0 0 16 16">
-                      <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-                    </svg>
-                  </a>
-                  <div> Results </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <%# bar chart display %>
-          <div class="results-card-graph">
-            <div class="w-75 mt-3">
-              <section id="graph">
-                <%= bar_chart(@categories) %>
-              </section>
-            </div>
-          </div>
-          <%# post to instagram button if all values are nil %>
-          <div class="mt-2">
-            <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-              <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-                <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
-              <% end %>
-            <% end %>
-          </div>
-          <%#safe results%>
-          <div class="results-card">
-            <% if !@safe.empty? %>
-              <p>
-                <% @safe.each_with_index do |cat, index|%>
-                  <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>" class="risk-label no-risk"><%= cat %> <i class="fa-regular fa-circle-question"></i></span>
                 <% end %>
-              </p>
-              <% @safe.each_with_index do |cat, index| %>
-                <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
-                  <p><em><%= cat %></em></p>
-                  <p><%= @descriptions[cat] %></p>
-                </div>
-              <% end %>
-            <% end %>
+              </div>
+              <%#safe results%>
+              <div class="results-card">
+                <% if !@safe.empty? %>
+                  <p>
+                    <% @safe.each_with_index do |cat, index|%>
+                      <span data-bs-toggle="collapse" data-bs-target="#safecollapse<%=index%>" class="risk-label no-risk"><%= cat %> <i class="fa-regular fa-circle-question"></i></span>
+                    <% end %>
+                  </p>
+                  <% @safe.each_with_index do |cat, index| %>
+                    <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
+                      <p><em><%= cat %></em></p>
+                      <p><%= @descriptions[cat] %></p>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>

@@ -110,6 +110,7 @@ class ImageResultsController < ApplicationController
       @result.width = size[0]
       @result.height = size[1]
       @result.save
+      GenerateCellsJob.perform_later(@result)
       redirect_to image_result_path(@result)
     else
       render :new, status: :uprocessable_entity

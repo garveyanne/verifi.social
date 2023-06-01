@@ -4,7 +4,7 @@ class Cell < ApplicationRecord
   belongs_to :image_result
   has_one_attached :photo
   validates_uniqueness_of :image_result, scope: [:col, :row]
-  before_create :verifi
+  # before_create :verifi
 
   def danger?
     # marking the cell as dangerous or not for the red border effect

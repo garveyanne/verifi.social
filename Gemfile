@@ -34,7 +34,7 @@ gem "jbuilder"
 
 gem "pundit"
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 3.3.3"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -62,7 +62,8 @@ gem "cloudinary"
 gem "chartkick"
 gem 'chunky_png'
 gem 'fastimage'
-
+gem "sidekiq", '<7'
+gem "sidekiq-failures", "~> 1.0"
 
 ## custom adds
 gem 'acts-as-taggable-on'

@@ -1,2 +1,2 @@
 <%# this is a partial to create the URL to blur the photo %>
-<img src="https://res.cloudinary.com/di4ap7ugr/image/upload/e_blur_region:1000,h_100,w_100,x_<%= (x.to_i * ratio_w).round %>,y_<%= (y.to_i * ratio_h).round %>/c_fit,h_400,w_400/v1/development/<%= src %>" alt="">
+<img src="https://res.cloudinary.com/di4ap7ugr/image/upload/e_blur_region:1000,h_100,w_100,x_<%= (x.to_i * ratio_w).round %>,y_<%= (y.to_i * ratio_h).round %>/c_fit,h_400,w_400/v1/<%= Rails.env %>/<%= src %>" alt="">
