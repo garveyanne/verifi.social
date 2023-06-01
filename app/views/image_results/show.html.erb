@@ -137,7 +137,7 @@
           </div>
         <%end%>
         <%# post to instagram button if all values are nil %>
-        <div class="d-flex justify-content-center mt-2">
+        <div class="d-flex justify-content-center mt-2 mb-2">
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
             <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
               <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
