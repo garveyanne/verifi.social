@@ -35,6 +35,7 @@ class VerifiCellsJob < ApplicationJob
       cell.profanity_match = output["text"]["profanity"][0]["match"]
       cell.profanity_intensity = output["text"]["profanity"][0]["intensity"]
     end
+    cell.checked = true
     cell.save
   end
 end

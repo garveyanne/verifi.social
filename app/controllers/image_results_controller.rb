@@ -117,6 +117,14 @@ class ImageResultsController < ApplicationController
     end
   end
 
+  def update_cells
+    @result = ImageResult.find(params[:id])
+    authorize @result
+    sleep 10
+    @result.cells.update_all(checked: true)
+    redirect_to image_result_path(@result)
+  end
+
   def verifi(result)
     #call the API for info
     uri = URI('https://api.sightengine.com/1.0/check.json')

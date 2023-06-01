@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :image_results, only: [:index, :show, :new, :create, :destroy] do
     resources :cells, only: [:index, :new, :create]
+    member do
+      patch :update_cells
+    end
   end
+
   resources :posts do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
