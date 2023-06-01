@@ -12,11 +12,11 @@
   }
   }
 
-  .img-round {
+  #img-round {
     width: 100%; /* or any custom size */
     height: 100%;
     object-fit: contain;
-     border-radius: 10px;
+    border-radius: 10px;
   }
 
   .results-card-graph {
