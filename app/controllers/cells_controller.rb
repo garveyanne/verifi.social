@@ -34,7 +34,9 @@ class CellsController < ApplicationController
         url = "https://res.cloudinary.com/#{ENV['CLOUDINARY_NAME']}/image/upload/c_crop,h_#{cell_height},w_#{cell_width},x_#{x},y_#{y}/v1/#{Rails.env}/#{result.photo.key}"
         # verifi(result) is done before creation on the model
         # create cells with all info needed
-        authorize Cell.create(x_coor: x, y_coor: y, photo_url: url, image_result: result, row: row, col: col)
+        cell = Cell.new(x_coor: x, y_coor: y, photo_url: url, image_result: result, row: row, col: col)
+        authorize cell
+        cell.save if cell.valid?
       end
     end
   end
