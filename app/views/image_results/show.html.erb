@@ -11,7 +11,7 @@
         <div>
           <%# text risks section %>
           <% if @result.profanity_type %>
-            <h3><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h3>
+            <h2><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h2>
           <% end %>
         </div>
         <div>
@@ -20,7 +20,7 @@
             <h2 class="mt-3">No risks for removal</h2>
           <% end %>
           <% if !@danger.empty? %>
-            <h2 class="mt-2"><strong>High risk for removal</strong></h2>
+            <h2 class="mt-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
             <div class="collapse border border-1 p-3" id="dangercollapse" >
               <% @danger.each do |cat| %>
@@ -46,7 +46,7 @@
         <div class="mt-2 mb-2 results-card">
           <%# original image %>
           <div data-pixelate-image-target="image">
-            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
+            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, class:"img-round", style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
           </div>
           <% if @result.cells.where(checked: true).count == 25 %>
             <%# Breakdown image %>
@@ -113,13 +113,15 @@
           </div>
         </div>
         <%# bar chart display %>
-        <div class="results-card-graph">
-          <div class="w-75 mt-3">
-            <section id="graph">
-              <%= bar_chart(@categories) %>
-            </section>
+        <% if !@danger.empty? || !@caution.empty? %>
+          <div class="results-card-graph">
+            <div class="w-75 mt-3">
+              <section id="graph">
+                <%= bar_chart(@categories) %>
+              </section>
+            </div>
           </div>
-        </div>
+        <%end%>
         <%# post to instagram button if all values are nil %>
         <div class="d-flex justify-content-center mt-2">
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
@@ -128,8 +130,8 @@
             <% end %>
           <% end %>
         </div>
-        <%#safe results%>
       </div>
+      <%#safe results%>
       <div class="risks-card">
         <% if !@safe.empty? %>
           <p>
