@@ -37,7 +37,7 @@
             <div class="image-container" data-pixelate-image-target="image">
               <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
             </div>
-            <%# built into Breakdown image %>
+            <%# Breakdown image %>
             <div class="grid-container w-100">
               <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
                 <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
