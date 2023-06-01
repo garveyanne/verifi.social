@@ -60,7 +60,7 @@
         <div class="mt-2 mb-2 results-card">
           <%# original image %>
           <div data-pixelate-image-target="image">
-            <%= cl_image_tag @result.photo.key, id: "img-round", height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
+            <%= cl_image_tag @result.photo.key, id: "img-round", height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.where(checked: false)), data: {action:"click->pixelate-image#coordinates"} %>
           </div>
           <% if @result.cells.where(checked: true).count == 25 %>
             <%# Breakdown image %>
