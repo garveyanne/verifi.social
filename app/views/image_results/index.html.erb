@@ -10,7 +10,7 @@
               <div class="ps-2 pe-2 d-flex justify-content-between">
                 <p class="mt-1 mb-0 pt-2 ps-1">
                   <%= result.created_at.strftime("%B %d") %></p>
-                <% if result.risk_category[:danger].empty? %>
+                <% if result.risk_category[:danger].empty?%>
                   <p class="risk-label no-risk mt-2 me-1"> No risk </p>
                 <% else %>
                   <p class="risk-label at-high-risk mt-2 me-1"> At risk </p>
