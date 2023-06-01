@@ -10,8 +10,8 @@
         <div>
           <div class="w-100 overflow-hidden">
             <%# the image %>
-            <div data-pixelate-image-target="image" data-action="click->pixelate-image#coordinates">
-              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?) %>
+            <div data-pixelate-image-target="image">
+              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
             </div>
             <div class="m-3">
               <%# cell button %>
