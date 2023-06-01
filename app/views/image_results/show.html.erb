@@ -1,9 +1,9 @@
 <div class="container" data-controller="typed pixelate-image">
   <div class="row justify-content-center">
     <div class="test" data-typed-target="test">
-        <div class="text">
-        </div>
+      <div class="text">
       </div>
+    </div>
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <%# <div class="row"> %>
       <%#risks%>
@@ -11,7 +11,7 @@
         <div>
           <%# text risks section %>
           <% if @result.profanity_type %>
-            <h3><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h3>
+            <h2><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h2>
           <% end %>
         </div>
         <div>
@@ -46,7 +46,7 @@
         <div class="mt-2 mb-2 results-card">
           <%# original image %>
           <div data-pixelate-image-target="image">
-            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
+            <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, class:"img-round", style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
           </div>
           <%# Breakdown image %>
           <div class="grid-container w-100">
