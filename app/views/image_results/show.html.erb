@@ -52,6 +52,10 @@
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
+          <% elsif @result.profanity_type %>
+            <div>
+              <h2>Risk for removal</h2>
+            </div>
           <% else @categories.values.all?(nil) %>
             <h2 class="mt-2">No risks for removal</h2>
           <% end %>
