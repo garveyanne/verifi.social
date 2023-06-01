@@ -3,7 +3,7 @@ let on=false
 
 // Connects to data-controller="pixelate-image"
 export default class extends Controller {
-  static targets = [ "image", "input"]
+  static targets = [ "image", "input" ]
   connect() {
     console.log("ready to pixelate")
   }

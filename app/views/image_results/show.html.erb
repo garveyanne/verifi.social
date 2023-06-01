@@ -1,81 +1,86 @@
 <div class="container" data-controller="typed pixelate-image">
   <div class="row justify-content-center">
-    <div class="test" data-typed-target="test">
-      <div class="text">
-      </div>
-    </div>
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
-      <h3 class="mt-3 mb-3">Details</h3>
       <div class="row">
         <div>
-          <div class="w-100 overflow-hidden">
-            <%# the image %>
-            <div data-pixelate-image-target="image">
-              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
-            </div>
-            <div class="m-3">
-              <%# if they have not created cells, will display a button %>
-              <% if @result.cells.empty? %>
-                <%= simple_form_for [@result, @cell] do |f| %>
-                  <%= f.submit "Break down image", class: "button mt-3", data:{action:"click->typed#display"} %>
-                <% end %>
-              <% else %>
-                <p>See image breakdown below</p>
-              <% end %>
-            </div>
-            <div>
-              <div class="grid-container w-100">
-                <%# cell results built into an image %>
-                <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
-                  <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
-                <% end %>
-              </div>
-            </div>
-            <div class="">
-              <%# 2 buttons to start blur action and re-verifi %>
-              <button class="button mt-3" data-action="click->pixelate-image#start">Click to start blurring</button>
-              <form action="/image_results" method="POST">
-                <input type="text" data-pixelate-image-target="input" hidden name="url_image">
-                <% form_authenticity_token %>
-                <input type="submit" class="button mt-3" value="Click to Re-verifi">
-              </form>
-            </div>
-          </div>
-          <div Class=" mt-3 mb-2">
-            <%# text risks section %>
-            <% if @result.profanity_type %>
-              <h3><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h3>
-            <% end %>
-          </div>
+          <%# text risks section %>
+          <% if @result.profanity_type %>
+            <h3><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h3>
+          <% end %>
         </div>
-        <div class="mb-2">
+        <div class="mb-0">
           <%# image risks section %>
           <% if @categories.values.all?(nil) %>
-            <h3 class="mt-3">No imagery related risks</h3>
-          <% else %>
-            <h3 class="mt-3">Imagery related risks:</h3>
-            <% if @danger.empty? && @caution.empty? %>
-              <p><strong>Low risk for removal</strong></p>
-            <% else %>
-              <p><strong>Your photo is at risk due to high <%= @danger.join(", ") %> levels</strong></p>
-              <% if !@danger.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
-                <div class="collapse border border-1 rounded p-3 mb-3" id="dangercollapse" >
-                  <% @danger.each do |cat| %>
-                    <p><em><%= cat %></em></p>
-                    <p><%= @descriptions[cat] %></p>
-                  <% end %>
-                </div>
+            <h3>No risks</h3>
+          <% end %>
+          <% if !@danger.empty? %>
+            <h2><strong>High risk for removal<%= @danger.join(", ")%></strong></h2>
+            <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
+            <div class="collapse border border-1 p-3" id="dangercollapse" >
+              <% @danger.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
               <% end %>
-              <% if !@caution.empty? %>
-                <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
-                <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
-                  <% @caution.each do |cat| %>
-                    <p><em><%= cat %></em></p>
-                    <p><%= @descriptions[cat] %></p>
-                  <% end %>
-                </div>
+            </div>
+          <% end %>
+          <% if !@caution.empty? %>
+            <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
+            <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
+              <% @caution.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
               <% end %>
+            </div>
+          <% end %>
+          <div class="w-100 overflow-hidden">
+            <%# the image %>
+            <div class="image-container" data-pixelate-image-target="image">
+              <%= cl_image_tag @result.photo.key, height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.empty?), data: {action:"click->pixelate-image#coordinates"} %>
+            </div>
+            <%# Breakdown image %>
+            <div class="grid-container w-100">
+              <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
+                <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
+              <% end %>
+            </div>
+            <%# Icons %>
+            <div class="d-flex justify-content-evenly mt-2">
+              <%# 2 buttons to start blur action and re-verifi %>
+              <%# blur image icon %>
+              <div>
+                <button data-action="click->pixelate-image#start"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hand-index" viewBox="0 0 16 16">
+                    <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 1 0 1 0V6.435a4.9 4.9 0 0 1 .106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 0 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.035a.5.5 0 0 1-.416-.223l-1.433-2.15a1.5 1.5 0 0 1-.243-.666l-.345-3.105a.5.5 0 0 1 .399-.546L5 8.11V9a.5.5 0 0 0 1 0V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"/>
+                  </svg></button>
+                <div>Blur</div>
+                <form action="/image_results" method="POST">
+                  <input type="text" data-pixelate-image-target="input" hidden name="url_image">
+                  <% form_authenticity_token %>
+                  <input type="submit" class="button mt-3" value="Re-verifi">
+                </form>
+              </div>
+              <%#cell image icon%>
+              <div>
+                <%= simple_form_for [@result, @cell] do |f| %>
+                  <%= f.button :button, data:{action:"click->typed#display"} do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-grid-3x3" viewBox="0 0 16 16">
+                      <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5V5h4V1H1.5zM5 6H1v4h4V6zm1 4h4V6H6v4zm-1 1H1v3.5a.5.5 0 0 0 .5.5H5v-4zm1 0v4h4v-4H6zm5 0v4h3.5a.5.5 0 0 0 .5-.5V11h-4zm0-1h4V6h-4v4zm0-5h4V1.5a.5.5 0 0 0-.5-.5H11v4zm-1 0V1H6v4h4z"/>
+                    </svg>
+                    <div>Breakdown</div>
+                  <% end %>
+                <% end %>
+              </div>
+              <%# bar chart icon %>
+              <div>
+                <a href="#graph" style="color: black">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
+                    <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                  </svg>
+                </a>
+                <div> Results </div>
+              </div>
+            </div>
+            <%#safe results%>
+            <div class="mt-3">
               <% if !@safe.empty? %>
                 <p>Safe:
                   <% @safe.each_with_index do |cat, index|%>
@@ -83,25 +88,27 @@
                   <% end %>
                 </p>
                 <% @safe.each_with_index do |cat, index| %>
-                  <div class="collapse  border border-1 rounded p-3 mb-3" id="safecollapse<%=index%>" >
+                  <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
                     <p><em><%= cat %></em></p>
                     <p><%= @descriptions[cat] %></p>
                   </div>
                 <% end %>
               <% end %>
-            <% end %>
+            </div>
             <%# bar chart display %>
             <div class="w-75 mb-3">
-              <%= bar_chart(@categories) %>
+              <section id="graph">
+                <%= bar_chart(@categories) %>
+              </section>
             </div>
-          <% end %>
-          <div class="mb-5">
             <%# post to instagram button if all values are nil %>
-            <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-              <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-                <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
+            <div class="mb-5">
+              <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+                <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
+                  <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mb-5" %>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>

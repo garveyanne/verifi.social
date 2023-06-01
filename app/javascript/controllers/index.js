@@ -15,3 +15,4 @@ application.register("pixelate-image", PixelateImageController)
 
 import TypedController from "./typed_controller"
 application.register("typed", TypedController)
+
