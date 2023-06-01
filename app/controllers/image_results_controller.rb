@@ -76,9 +76,11 @@ class ImageResultsController < ApplicationController
     @cell = Cell.new
     # reading the results from the grid APIs
     if params[:x] && params[:y]
+      @ratio_h = @result.height / params[:h].to_f
+      @ratio_w = @result.width / params[:w].to_f
       respond_to do |format|
         format.html # Follow regular flow of Rails
-        format.text { render partial: "image", locals: {x: params[:x], y: params[:y], src: @result.photo.key}, formats: [:html] }
+        format.text { render partial: "image", locals: {x: params[:x], y: params[:y], ratio_h: @ratio_h, ratio_w: @ratio_w, src: @result.photo.key}, formats: [:html] }
       end
     end
   end
