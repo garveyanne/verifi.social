@@ -1,26 +1,27 @@
 .results-card {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  border: solid 0.1px rgb(185, 185, 185);
   width: 100%;
-  margin: auto;
-  border-radius: 10px;
+  margin: auto, 0px;
+  border-radius: 5px;
   padding: 4px;
+  img {
+    width: 100%; /* or any custom size */
+    height: 100%;
+    object-fit: contain;
+  }
   }
 
   .results-card-graph {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    border: solid 0.1px rgb(185, 185, 185);
-    border-top: none;
     width: 100%;
     margin: auto;
-    border-radius: 2px;
+    border-radius: 5px;
     }
 
     .risks-card {
       box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-      border: solid 0.1px rgb(185, 185, 185);
-      width: 100%;
+      width: 95%;
       margin: auto;
-      border-radius: 10px;
+      border-radius: 5px;
       padding: 4px;
     }
