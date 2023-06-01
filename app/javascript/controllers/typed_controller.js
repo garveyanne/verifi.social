@@ -16,9 +16,8 @@ export default class extends Controller {
       this.testTarget.style.display="flex"
     }
     const typed = new Typed('.text', {
-      strings: ['Receiving your photo...^900','Breaking down your image ...^900', ' Building data...^900', 'Cleaning up...^900'],
+      strings: ['Receiving your photo...^400', ' Building data...^400', 'Cleaning up...^400'],
       typeSpeed: 100,
-      backSpeed: 80,
     });
   }
 }
