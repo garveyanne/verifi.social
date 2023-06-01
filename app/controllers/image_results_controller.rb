@@ -110,10 +110,19 @@ class ImageResultsController < ApplicationController
       @result.width = size[0]
       @result.height = size[1]
       @result.save
+      GenerateCellsJob.perform_later(@result)
       redirect_to image_result_path(@result)
     else
       render :new, status: :uprocessable_entity
     end
+  end
+
+  def update_cells
+    @result = ImageResult.find(params[:id])
+    authorize @result
+    sleep 10
+    @result.cells.update_all(checked: true)
+    redirect_to image_result_path(@result)
   end
 
   def verifi(result)
