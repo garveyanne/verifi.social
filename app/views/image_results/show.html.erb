@@ -7,7 +7,7 @@
     <div class="col-12 col-sm-10 col-md-8 col-lg-8">
       <%# <div class="row"> %>
       <%#risks%>
-      <div class="mt-2 risks-card">
+      <div class="mt-3 mb-0 risks-card">
         <div>
           <%# text risks section %>
           <% if @result.profanity_type %>
@@ -53,13 +53,13 @@
               <% end %>
             </div>
           <% else @categories.values.all?(nil) %>
-            <h2 class="mt-3">No risks for removal</h2>
+            <h2 class="mt-2">No risks for removal</h2>
           <% end %>
         </div>
       </div>
       <%#image and icons%>
       <div class="w-100 overflow-hidden">
-        <div class="mt-2 mb-2 results-card">
+        <div class="mt-3 mb-0 results-card">
           <% if @result.cells.where(checked: true).count == 25 %>
             <%# Breakdown image %>
             <div class="grid-container w-100">
@@ -128,8 +128,8 @@
         </div>
         <%# bar chart display %>
         <% if !@danger.empty? || !@caution.empty? %>
-          <div class="results-card-graph">
-            <div class="w-75 mt-3">
+          <div class="results-card-graph mt-3 mb-0">
+            <div class="w-75">
               <section id="graph">
                 <%= bar_chart(@categories) %>
               </section>
@@ -137,8 +137,11 @@
           </div>
         <%end%>
         <%# post to instagram button if all values are nil %>
+
         <div class="d-flex justify-content-center mt-2 mb-2">
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil && !@result.cells.any?{ |cell| cell.danger? } %>
+
+
             <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
               <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
             <% end %>
@@ -146,7 +149,7 @@
         </div>
       </div>
       <%#safe results%>
-      <div class="risks-card">
+      <div class="risks-card mt-1 mb-0">
         <% if !@safe.empty? %>
           <p>
             <% @safe.each_with_index do |cat, index|%>
