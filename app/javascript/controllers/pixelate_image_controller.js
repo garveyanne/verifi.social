@@ -14,7 +14,6 @@ export default class extends Controller {
     if (on) {
       // const imgsrc = this.imageTarget.src
       const width = this.imageTarget.children[0].width
-
       const height = this.imageTarget.children[0].height
       // console.log(width)
       console.log(height)
