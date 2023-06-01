@@ -16,9 +16,6 @@
         </div>
         <div>
           <%# image risks section %>
-          <% if @categories.values.all?(nil) %>
-            <h2 class="mt-3">No risks for removal</h2>
-          <% end %>
           <% if !@danger.empty? %>
             <h2 class="mt-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
@@ -28,8 +25,23 @@
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
-          <% end %>
-          <% if !@caution.empty? %>
+          <% elsif !@danger.empty? && !@caution.empty? %>
+            <h2 class="mt-2">High risk for removal</h2>
+            <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
+            <div class="collapse border border-1 p-3" id="dangercollapse" >
+              <% @danger.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
+              <%end%>
+            </div>
+            <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
+            <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
+              <% @caution.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
+              <% end %>
+            </div>
+          <% elsif !@caution.empty? %>
             <h2>Low risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
             <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
@@ -38,6 +50,8 @@
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
+          <% else @categories.values.all?(nil) %>
+            <h2 class="mt-3">No risks for removal</h2>
           <% end %>
         </div>
       </div>
