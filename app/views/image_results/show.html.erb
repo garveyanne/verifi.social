@@ -25,6 +25,8 @@
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
+          <% elsif @result.cells.any? { |cell| cell.danger? }  %>
+            <h2 class="mt-2">High risk for removal</h2>
           <% elsif !@danger.empty? && !@caution.empty? %>
             <h2 class="mt-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
@@ -58,16 +60,17 @@
       <%#image and icons%>
       <div class="w-100 overflow-hidden">
         <div class="mt-2 mb-2 results-card">
-          <%# original image %>
-          <div data-pixelate-image-target="image">
-            <%= cl_image_tag @result.photo.key, id: "img-round", height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.where(checked: false)), data: {action:"click->pixelate-image#coordinates"} %>
-          </div>
           <% if @result.cells.where(checked: true).count == 25 %>
             <%# Breakdown image %>
             <div class="grid-container w-100">
               <% @result.cells.order(row: :asc, col: :asc).each do |cell| %>
                 <%= image_tag(cell.photo_url, class: "w-100 cell #{ "gridstyle" if cell.danger? }") %>
               <% end %>
+            </div>
+          <% else %>
+            <%# original image %>
+            <div data-pixelate-image-target="image">
+              <%= cl_image_tag @result.photo.key, id: "img-round", height: 400, width: 400, crop: :fit, style: ("display: none;" unless @result.cells.where(checked: false)), data: {action:"click->pixelate-image#coordinates"} %>
             </div>
           <% end %>
           <%# Icons %>
