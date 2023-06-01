@@ -1,12 +1,12 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon p-0">
   <div class="container-fluid mt-0 mb-0">
     <%= link_to "/", class: "navbar-brand" do %>
-      <h1 class="mt-1">Verifi</h1>
+      <h1 class="mt-2 ms-1">Verifi</h1>
     <% end %>
     <div class="me-2 mt-1">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
-          <div class="nav-item dropdown">
+          <div class="nav-item dropdown me-1 mt-1">
             <i class="fa-solid fa-bell fs-3" data-bs-toggle="dropdown" aria-expanded="false" ></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-text">
               <%= current_user.notifications.where(unread: true).count %>
