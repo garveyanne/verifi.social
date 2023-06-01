@@ -16,7 +16,7 @@
               <h3 class="mt-3">No risks</h3>
             <% end %>
             <% if !@danger.empty? %>
-              <h2 class="mt-2"><strong>High risk for removal<%= @danger.join(", ")%></strong></h2>
+              <h2 class="mt-2"><strong>High risk for removal</strong></h2>
               <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
               <div class="collapse border border-1 p-3" id="dangercollapse" >
                 <% @danger.each do |cat| %>
