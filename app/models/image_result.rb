@@ -23,6 +23,10 @@ class ImageResult < ApplicationRecord
     if profanity_type
       @danger << "profanity"
     end
+
+    if cells.any? { |cell| cell.danger? }
+      @danger << "grid"
+    end
     return { danger: @danger, caution: @caution, safe: @safe}
   end
 end
