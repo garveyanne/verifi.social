@@ -11,7 +11,8 @@
         <div>
           <%# text risks section %>
           <% if @result.profanity_type %>
-            <h2><%= @result.profanity_intensity.html_safe.capitalize %> Intensity <%= @result.profanity_type.html_safe.capitalize %> Profanity Found: <em><%= @result.profanity_match.html_safe.capitalize %></em></h2>
+            <h2><%= @result.profanity_intensity.html_safe.capitalize %> risk for removal</h2>
+            <p> <%= @result.profanity_type.html_safe.capitalize %> Profanity: <strong class="risk-label at-high-risk mt-2 me-1"><%= @result.profanity_match.html_safe.capitalize %></strong></p>
           <% end %>
         </div>
         <div>
@@ -53,9 +54,6 @@
               <% end %>
             </div>
           <% elsif @result.profanity_type %>
-            <div>
-              <h2 class="ms-2">Risk for removal</h2>
-            </div>
           <% else @categories.values.all?(nil) %>
             <h2 class="mt-2 ms-2">No risks for removal</h2>
           <% end %>
