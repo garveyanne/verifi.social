@@ -16,18 +16,7 @@
         </div>
         <div>
           <%# image risks section %>
-          <% if !@danger.empty? %>
-            <h2 class="mt-2  ms-2">High risk for removal</h2>
-            <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
-            <div class="collapse p-1" id="dangercollapse" >
-              <% @danger.each do |cat| %>
-                <p><em><%= cat %></em></p>
-                <p><%= @descriptions[cat] %></p>
-              <% end %>
-            </div>
-          <% elsif @result.cells.any? { |cell| cell.danger? }  %>
-            <h2 class="mt-2  ms-2">High risk for removal</h2>
-          <% elsif !@danger.empty? && !@caution.empty? %>
+          <% if !@danger.empty? && !@caution.empty? %>
             <h2 class="mt-2  ms-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
             <div class="collapse p-1" id="dangercollapse" >
@@ -43,6 +32,17 @@
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
+          <% elsif !@danger.empty? %>
+            <h2 class="mt-2  ms-2">High risk for removal</h2>
+            <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
+            <div class="collapse p-1" id="dangercollapse" >
+              <% @danger.each do |cat| %>
+                <p><em><%= cat %></em></p>
+                <p><%= @descriptions[cat] %></p>
+              <% end %>
+            </div>
+          <% elsif @result.cells.any? { |cell| cell.danger? }  %>
+            <h2 class="mt-2  ms-2">High risk for removal</h2>
           <% elsif !@caution.empty? %>
             <h2 class="ms-2">Low risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
