@@ -17,36 +17,36 @@
         <div>
           <%# image risks section %>
           <% if !@danger.empty? %>
-            <h2 class="mt-2">High risk for removal</h2>
+            <h2 class="mt-2  ms-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
-            <div class="collapse border border-1 p-3" id="dangercollapse" >
+            <div class="collapse p-1" id="dangercollapse" >
               <% @danger.each do |cat| %>
                 <p><em><%= cat %></em></p>
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
           <% elsif @result.cells.any? { |cell| cell.danger? }  %>
-            <h2 class="mt-2">High risk for removal</h2>
+            <h2 class="mt-2  ms-2">High risk for removal</h2>
           <% elsif !@danger.empty? && !@caution.empty? %>
-            <h2 class="mt-2">High risk for removal</h2>
+            <h2 class="mt-2  ms-2">High risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#dangercollapse">High: <span class="risk-label at-high-risk"><%= @danger.join(", ") %> <i class="fa-regular fa-circle-question"></i></span></p>
-            <div class="collapse border border-1 p-3" id="dangercollapse" >
+            <div class="collapse p-1" id="dangercollapse" >
               <% @danger.each do |cat| %>
                 <p><em><%= cat %></em></p>
                 <p><%= @descriptions[cat] %></p>
               <%end%>
             </div>
             <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
-            <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
+            <div class="collapse p-1 mb-3" id="cautioncollapse" >
               <% @caution.each do |cat| %>
                 <p><em><%= cat %></em></p>
                 <p><%= @descriptions[cat] %></p>
               <% end %>
             </div>
           <% elsif !@caution.empty? %>
-            <h2>Low risk for removal</h2>
+            <h2 class="ms-2">Low risk for removal</h2>
             <p data-bs-toggle="collapse" data-bs-target="#cautioncollapse">Caution: <span class="risk-label at-risk"><%= @caution.join(", ")  %> <i class="fa-regular fa-circle-question"></i></span></p>
-            <div class="collapse border border-1 rounded p-3 mb-3" id="cautioncollapse" >
+            <div class="collapse p-1 mb-3" id="cautioncollapse" >
               <% @caution.each do |cat| %>
                 <p><em><%= cat %></em></p>
                 <p><%= @descriptions[cat] %></p>
@@ -54,10 +54,10 @@
             </div>
           <% elsif @result.profanity_type %>
             <div>
-              <h2>Risk for removal</h2>
+              <h2 class="ms-2">Risk for removal</h2>
             </div>
           <% else @categories.values.all?(nil) %>
-            <h2 class="mt-2">No risks for removal</h2>
+            <h2 class="mt-2 ms-2">No risks for removal</h2>
           <% end %>
         </div>
       </div>
@@ -144,7 +144,7 @@
         <div class="d-flex justify-content-start mt-2 mb-2">
           <% if @categories.values.all?(nil) && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil && !@result.cells.any?{ |cell| cell.danger? } %>
             <% if @danger.empty? && @result.profanity_type == nil && @result.profanity_match == nil && @result.profanity_intensity == nil %>
-              <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button" %>
+              <%= link_to "Post to instagram!", "https://www.instagram.com/", class: "button mt-1" %>
             <% end %>
           <% end %>
         </div>
@@ -158,7 +158,7 @@
             <% end %>
           </p>
           <% @safe.each_with_index do |cat, index| %>
-            <div class="collapse  border border-1 p-3" id="safecollapse<%=index%>" >
+            <div class="collapse p-1" id="safecollapse<%=index%>" >
               <p><em><%= cat %></em></p>
               <p><%= @descriptions[cat] %></p>
             </div>
