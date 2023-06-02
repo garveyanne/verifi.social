@@ -10,7 +10,7 @@
           <div class="results-container mt-3">
             <%= simple_form_for @result do |f| %>
               <%= f.input :photo, label: false, as: :file, input_html: {class: "bg-white"} %>
-              <%= f.submit class: "button-login", data:{action:"click->loading#showSpinner"} %>
+              <%= f.submit "Upload", class: "button-login", data:{action:"click->loading#showSpinner"} %>
             <% end %>
           </div>
         </div>
